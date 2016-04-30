@@ -46,7 +46,7 @@ function displayHUD()
 	cleanlinessCounter.innerHTML = "<span class = 'bold'>Connectivity:</span> " + PLAYER.cleanliness + "%";
 }
 
-function updateStatsMenu(tower)
+function updateStatsMenu(tower, upgrade)
 {
     if((tower instanceof ProductionTower == false || tower instanceof OffensiveTower == false) && tower != undefined)
     {
@@ -73,23 +73,51 @@ function updateStatsMenu(tower)
         return;
     }
     
-    $('#sellPrice').html(Math.ceil(tower.sell));
-    if(tower.source.indexOf("offensive") > -1)
+    if(upgrade == undefined)
     {
-        $('.offensive').removeClass('disabled');
-        $('#production').html('N/A');
-        $('#dmg').html(tower.damage);
-        $('#range').html(tower.range);
-        $('#consumption').html(tower.efficiency);
-        $('#rate').html(tower.rate);
+        $('#sellPrice').html(Math.ceil(tower.sell));
+        if(tower.source.indexOf("offensive") > -1)
+        {
+            $('.offensive').removeClass('disabled');
+            $('#production').html('N/A');
+            $('#dmg').html(tower.damage);
+            $('#range').html(tower.range);
+            $('#consumption').html(tower.efficiency);
+            $('#rate').html(tower.rate);
+        }
+        else
+        {
+            $('.production').removeClass('disabled');
+            $('#dmg').html('N/A');
+    		$('#range').html('N/A');
+    		$('#rate').html('N/A');
+    		$('#consumption').html('N/A');
+            $('#production').html(tower.rate);
+        }
     }
     else
     {
-        $('.production').removeClass('disabled');
-        $('#dmg').html('N/A');
-		$('#range').html('N/A');
-		$('#rate').html('N/A');
-		$('#consumption').html('N/A');
-        $('#production').html(tower.rate);
+        //upgradeMenu.style.display = 'initial';
+        $('#sellPrice').html(Math.ceil(tower.sell) + "+" + parseInt(tower.sell*0.25));
+        if(upgrade == "damage")
+        {
+            $('#dmg').html(tower.damage + "+" + Math.ceil(tower.damage*0.15));
+            $('.offensive').removeClass('disabled');
+        }
+        else if(upgrade == "fireRate")
+        {
+            $('#rate').html(tower.rate + "+" + Math.ceil(tower.rate*0.10));
+            $('.offensive').removeClass('disabled');
+        }
+        else if(upgrade == "range")
+        {
+            $('#range').html(tower.range + "+" + tileWidth*0.25);
+            $('.offensive').removeClass('disabled');
+        }
+        else if(upgrade == "production")
+        {
+            $('#production').html(tower.rate + "+" + tower.rate*2.5);
+            $('.production').removeClass('disabled');
+        }
     }
 }
