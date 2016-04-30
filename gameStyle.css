@@ -9,6 +9,19 @@ body
 	width: 200px;
 }
 
+.rules
+{
+	width: 600px;
+}
+.prules
+{
+	color: white;
+	font-size: 16pt;
+}
+b
+{
+	color:orange;
+}
 
 #contentFrame
 {
@@ -37,7 +50,7 @@ body
 
 .towers
 {
-	font-size:9.5px;
+	font-size:9px;
 }
 
 .towers:hover
@@ -218,7 +231,7 @@ h4
 
 .shop-stats
 {
-	font-size:9.5px;
+	font-size:9px;
 }
 
 .shop-label:hover
