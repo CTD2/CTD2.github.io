@@ -372,6 +372,8 @@ function populateMap(mapNum) //determines which map to load
 		map3();
 	else if(mapNum == 4)
 		map4();
+	else
+	    mapRand();
 }
 
 function load(fn, delay, optionalParameter)
@@ -525,42 +527,3 @@ function lookforRoadDeg()
         }
     }
 }
-
-
-// DEALING WITH CLICKING AWAY FROM TAB - warns users before they click a new tab
-// Set the name of the hidden property and the change event for visibility
-
-// var hidden, visibilityChange; 
-// if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
-//   hidden = "hidden";
-//   visibilityChange = "visibilitychange";
-// } else if (typeof document.mozHidden !== "undefined") {
-//   hidden = "mozHidden";
-//   visibilityChange = "mozvisibilitychange";
-// } else if (typeof document.msHidden !== "undefined") {
-//   hidden = "msHidden";
-//   visibilityChange = "msvisibilitychange";
-// } else if (typeof document.webkitHidden !== "undefined") {
-//   hidden = "webkitHidden";
-//   visibilityChange = "webkitvisibilitychange";
-// }
-
-// // Throws the warning
-// function handleVisibilityChange() {
-//   if (document[hidden] && RUNNING) {
-//     if(window.confirm("WARNING: Clicking away from this tab mid-game may cause issues with gameplay. We strongly advise against it until your current level is complete. Are you sure you wish to do so?")){
-//         document.removeEventListener(visibilityChange, handleVisibilityChange, false);
-//     }
-//     document.getElementById('c').blur();
-//     setTimeout(document.getElementById('c').focus, 1);
-//   }
-// }
-
-// // Warn if the browser doesn't support addEventListener or the Page Visibility API
-// if (typeof document.addEventListener === "undefined" || 
-//   typeof document[hidden] === "undefined") {
-//   alert("The Page Visibility API is not supported with this browser. We suggest updating your browser for an optimal experience.");
-// } else {
-//   // Handle page visibility change   
-//   document.addEventListener(visibilityChange, handleVisibilityChange, false);
-// }

@@ -157,60 +157,184 @@ function map4() {
 	}
 }
 
-// function applyNumtoRoad()
-// {
-// 	var roadNum = 0;
+function mapRand()
+{
+	generateGrass() ;
+	var side = parseInt(Math.random()*2) ;
+	if(side == 1)
+		side = 9 ;
+	generateWater(side) ;
+	if(side == 9)
+		upperThresh = 8 ;
+	else
+		upperThresh = 9 ;
+	if(side == 0)
+		lowerThresh = 1 ;
+	else
+		lowerThresh = 0 ;
 	
-// 	for(var i = 0; i < changeableGrid.length; i++)
-// 	{
-// 		if(changeableGrid[i][0].type == "road")
-// 		{
-// 			changeableGrid[i][0].roadNum = ++roadNum;
-// 			lookforRoad(i, 0, roadNum);
-// 			return;
-// 		}
-// 	}
+	//GENERATE RANDOM ROAD HERE
+	var Xcoord = parseInt(Math.random()*(TILES_PER_SIDE-1)) ;
+	var Ycoord = 0 ;
+	if(side == 0)
+		Xcoord += 1;
+	Scoordx = Xcoord;
+	Scoordy = 0;
+	/*
+	mapGrid[Xcoord][0] = new Terrain("road", "roadDown.png", true, 270);
+	var nextRoad = parseInt(Math.random()*3);
 	
-// }
-// function lookforRoad(x, y, roadnum)
-// {
-// 	if(x-1 >= 0)
-// 	{
-// 		if(changeableGrid[x-1][y].type == "road" && changeableGrid[x-1][y].roadNum == 0)
-// 		{
-// 			roadnum++;
-// 			changeableGrid[x-1][y].roadNum = roadnum;
-// 			lookforRoad(x-1, y, roadnum);
-// 		}
-// 	}
-// 	if(x+1 <= 9)
-// 	{
-// 		if(changeableGrid[x+1][y].type == "road" && changeableGrid[x+1][y].roadNum == 0)
-// 		{
-// 			roadnum++;
-// 			changeableGrid[x+1][y].roadNum = roadnum;
-// 			lookforRoad(x+1, y, roadnum);
-// 		}
-// 	}
-// 	if(y-1 >= 0)
-// 	{
-// 		if(changeableGrid[x][y-1].type == "road" && changeableGrid[x][y-1].roadNum == 0)
-// 		{
-// 			roadnum++;
-// 			changeableGrid[x][y-1].roadNum = roadnum;
-// 			lookforRoad(x, y-1, roadnum);
-// 		}
-// 	}
-// 	if(y+1 <= 9)
-// 	{
-// 		if(changeableGrid[x][y+1].type == "road" && changeableGrid[x][y+1].roadNum == 0)
-// 		{
-// 			roadnum++;
-// 			changeableGrid[x][y+1].roadNum = roadnum;
-// 			lookforRoad(x, y+1, roadnum);
-// 		}
-// 	}
-// }
+	while(Ycoord < 9)
+	{
+		// var canGoUp = true ; ;
+		// for(var i = 0 ; i < Ycoord ; i++)
+		// {
+		// 	if(mapGrid[Xcoord-1][i] == "road" && mapGrid[Xcoord-1][i] == "water" && mapGrid[Xcoord+1][i] == "road" && mapGrid[Xcoord+1][i] == "water")
+		// 		canGoUp = false ;
+		// }
+		
+		if(nextRoad == 0  && Xcoord < 9 && mapGrid[Xcoord+1][Ycoord].type != "road" && mapGrid[Xcoord+1][Ycoord].type != "water")
+		{
+			Xcoord++ ;
+			mapGrid[Xcoord][Ycoord] = new Terrain("road", "roadSide.png", true, 0);
+			mapGrid[Xcoord-1][Ycoord].direction = 0 ;
+			if((Ycoord >= 0 && !mapGrid[Xcoord-1][Ycoord].direction == 0) || mapGrid[Xcoord-1][Ycoord-1].direction == 270 || mapGrid[Xcoord][Ycoord-1].source.indexOf("SE") > -1 || mapGrid[Xcoord][Ycoord-1].source.indexOf("SW") > -1)
+				mapGrid[Xcoord-1][Ycoord] = new Terrain("road", "roadNE.png", true, 0);
+		}
+		else if(nextRoad == 1 && Xcoord > 0 && mapGrid[Xcoord-1][Ycoord].type != "road" && mapGrid[Xcoord-1][Ycoord].type != "water")
+		{
+			Xcoord-- ;
+			mapGrid[Xcoord][Ycoord] = new Terrain("road", "roadSide.png", true, 180);
+			mapGrid[Xcoord+1][Ycoord].direction = 180 ;
+			if((Ycoord-1 < 0 && mapGrid[Xcoord+1][Ycoord].direction == 0) || mapGrid[Xcoord+1][Ycoord-1].direction == 270 || mapGrid[Xcoord][Ycoord-1].source.indexOf("SE") > -1 || mapGrid[Xcoord][Ycoord-1].source.indexOf("SW") > -1)
+				mapGrid[Xcoord+1][Ycoord] = new Terrain("road", "roadNW.png", true, 180);
+		}
+		else if(nextRoad == 2 && mapGrid[Xcoord][Ycoord+1].type != "road" && mapGrid[Xcoord][Ycoord+1].type != "water")
+		{
+			Ycoord++ ;
+			mapGrid[Xcoord][Ycoord] = new Terrain("road", "roadDown.png", true, 270);
+			mapGrid[Xcoord][Ycoord+1].direction = 270 ;
+			if(Xcoord-1 < 0 || mapGrid[Xcoord-1][Ycoord-1].direction == 0)
+				mapGrid[Xcoord][Ycoord+1] = new Terrain("road", "roadSW.png", true, 270);
+			// else if(Xcoord-1 < 0 || mapGrid[Xcoord+1][Ycoord-1].direction == 0)
+			// 	mapGrid[Xcoord-1][Ycoord] = new Terrain("road", "roadSE.png", true, 270);
+		}
+		// else if(nextRoad == 3 && Ycoord > 0 && mapGrid[Xcoord][Ycoord-1].type != "road" && mapGrid[Xcoord][Ycoord-1].type != "water" && canGoUp)
+		// {
+		// 	Ycoord-- ;
+		// 	mapGrid[Xcoord][Ycoord] = new Terrain("road", "roadDown.png", true, 270);
+		// }
+		nextRoad = parseInt(Math.random()*3);
+		
+		
+	}
+	*/
+	
+	roads = 1 ;
+	var begin = 270 ;
+	mapGrid[Xcoord][0] = new Terrain("road", "roadDown.png", true, begin);
+	placeRoad(Xcoord, Ycoord+1, begin) ;
+	
+	numRoadEnd = roads ;
+	
+	
+	var numOil = parseInt(Math.random()*5)+1;
+	for(var i = 0 ; i < numOil ; i++)
+	{
+		var XRand = parseInt(Math.random()*TILES_PER_SIDE);
+		var YRand = parseInt(Math.random()*TILES_PER_SIDE);
+		if(mapGrid[XRand][YRand].type == "road" || mapGrid[XRand][YRand].type == "water" || mapGrid[XRand][YRand].type == "oil")
+			i--
+		else
+		{
+			mapGrid[XRand][YRand] = new Terrain("oil", "oil.png", false, "");
+		}
+	}
+}
+
+function placeRoad(x, y, prevDir)
+{
+	if(y < 9)
+	{
+		var dir = getDirection(3,0);
+		if(dir == 0 && x+1 > upperThresh)
+		{
+			dir = getDirection(2,1);
+		}
+		if(dir == 180 && x-1 < lowerThresh)
+		{
+			dir = getDirection(2,0);
+		}
+		if(prevDir == 270 && dir == 270)
+		{
+			mapGrid[x][y] = new Terrain("road", "roadDown.png", true, dir);
+			roads++ ;
+			placeRoad(x, y+1, dir) ;
+		}
+		if(prevDir == 270 && dir == 0)
+		{
+			mapGrid[x][y] = new Terrain("road", "roadNE.png", true, dir);
+			roads++ ;
+			placeRoad(x+1, y, dir) ;
+		}
+		if(prevDir == 270 && dir == 180)
+		{
+			mapGrid[x][y] = new Terrain("road", "roadNW.png", true, dir);
+			roads++ ;
+			placeRoad(x-1, y, dir) ;
+		}
+		if(prevDir == 0 && dir == 0)
+		{
+			mapGrid[x][y] = new Terrain("road", "roadSide.png", true, dir);
+			roads++ ;
+			placeRoad(x+1, y, dir) ;
+		}
+		if(prevDir == 0 && dir == 270)
+		{
+			mapGrid[x][y] = new Terrain("road", "roadSW.png", true, dir);
+			roads++ ;
+			placeRoad(x, y+1, dir) ;
+		}
+		if(prevDir == 180 && dir == 180)
+		{
+			mapGrid[x][y] = new Terrain("road", "roadSide.png", true, dir);
+			roads++ ;
+			placeRoad(x-1, y, dir) ;
+		}
+		if(prevDir == 180 && dir == 270)
+		{
+			mapGrid[x][y] = new Terrain("road", "roadSE.png", true, dir);
+			roads++ ;
+			placeRoad(x, y+1, dir) ;
+		}
+		
+		
+		if(prevDir == 0 && dir == 180)
+		{
+			placeRoad(x, y, prevDir) ;
+		}
+		if(prevDir == 180 && dir == 0)
+		{
+			placeRoad(x, y, prevDir) ;
+		}
+	}
+	else
+	{
+		mapGrid[x][y] = new Terrain("road", "roadDown.png", true, 270);
+		roads++ ;
+	}
+}
+function getDirection(n, a)
+{
+	var nextRoad = parseInt(Math.random()*n)+a;
+	if(nextRoad == 0)
+		return 0 ;
+	if(nextRoad == 1)
+		return 270 ;
+	if(nextRoad == 2)
+		return 180 ;
+}
+
 /*function makeMap()
 {
 	var x = Math.random;

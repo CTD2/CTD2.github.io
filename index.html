@@ -89,7 +89,7 @@
 			    	Map 4<br />
 			    	<img class = "mapPics" src = "MapPics/Map4.png" />
 			    </a><br />
-			    <a href="#" onclick = "startGame(5); mainMenu.style.display = 'none'; showElements();" id="mainBtn" class="btn btn-primary btn-lg btn-block disabled" style="width:250px;left:375px;">
+			    <a href="#" onclick = "startGame(5); mainMenu.style.display = 'none'; showElements();" id="mainBtn" class="btn btn-primary btn-lg btn-block" style="width:250px;left:375px;">
 			    	Procedural<br />
 			    	<img class = "mapPics" src = "MapPics/MapUnknown.png" />
 			    </a>
@@ -132,10 +132,10 @@
 		
 		<div class="btn-group-vertical" id = "upgradeMenu">
 		  <span href="#" class="btn btn-primary shop-label">Tower<br />Upgrades</span>
-		  <a href="#" onclick="upgradeDamage();" class="btn btn-default towers offensive">Inc. Damage</a>
-		  <a href="#" onclick="upgradeFireRate();" class="btn btn-default towers offensive">Inc. Fire Rate</a>
-		  <a href="#" onclick="upgradeRange();" class="btn btn-default towers offensive">Inc. Range</a>
-		  <a href="#" onclick="upgradeProduction();" class="btn btn-default towers production">Inc. Production</a>
+		  <a href="#" onclick="upgradeDamage();" onmouseover="hoverUpgrades('damage');" onmouseout="upgradesMouseOut();" class="btn btn-default towers offensive">Inc. Damage</a>
+		  <a href="#" onclick="upgradeFireRate();" onmouseover="hoverUpgrades('fireRate');" onmouseout="upgradesMouseOut();" class="btn btn-default towers offensive">Inc. Fire Rate</a>
+		  <a href="#" onclick="upgradeRange();" onmouseover="hoverUpgrades('range');" onmouseout="upgradesMouseOut();" class="btn btn-default towers offensive">Inc. Range</a>
+		  <a href="#" onclick="upgradeProduction();" onmouseover="hoverUpgrades('production');" onmouseout="upgradesMouseOut();" class="btn btn-default towers production">Inc. Production</a>
 		  
 		  <span href="#" class="btn btn-primary shop-label">Tower<br />Stats</span>
 		  <span href="#" class="btn btn-default shop-stats">Price:<br />$<b id="sellPrice"></b></span>

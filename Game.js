@@ -101,6 +101,20 @@ function sellTower()
 	canvas.renderAll();
 }
 
+function hoverUpgrades(type)
+{
+	var index = towerObjs.indexOf(canvas.getActiveObject());
+	var tower = PLAYER.towerArray[index];
+	updateStatsMenu(tower, type);
+}
+
+function upgradesMouseOut()
+{
+	var index = towerObjs.indexOf(canvas.getActiveObject());
+	var tower = PLAYER.towerArray[index];
+	updateStatsMenu(tower);
+}
+
 function start()
 {
 	//startBtn.disabled = true;
@@ -210,6 +224,7 @@ function quitPrompt(confirmQuit)
 		hideElements();
 		mainMenu.style.display = "block";
 		vehicleQueue = null;
+		degChange.splice(0,degChange.length);
 	}
 }
 
