@@ -1,0 +1,46 @@
+--Feel free to contribute--
+
+||  TO DO:  ||
+
+----------------------------------------------------------------------------------------------------------------------------------------
+1. MAIN PRIORITY 
+    - Refactoring the entire game, converting it from table-based into a canvas based game utilizing the Fabric.js framework
+    - We still need to:
+        + Finish up vehicle animations (dynamic durations and having the spawns and despawns be dynamic)
+        + Reimplement grid-style tower placement and reimplement the shop menu for tower purchases and main menu for level selection
+        + Reimplement tower ranges and work on tower vehicle-tracking and projectiles
+        + Reimplement the HUD and buttons to pause and quit the game
+    - After the game reaches the same state of functionality as the old version we need to:
+        + Reskin the game to match our new prompt
+        + Apply all of the fixes and other tasks in the next TO-DO's
+    - If (and only if) we have time after we complete everything else:
+        + Implement a random map generation algorithm as a fifth map option for the user
+        + Implement a save mechanic where the level number, player money, tower placements, upgrades, etc are all saved to their account
+----------------------------------------------------------------------------------------------------------------------------------------
+  
+2. Hover context menus for each tower in the shop -- displaying cost, sell price, and other stats
+    - This would apply when you hover over any option in the shop and should appear next to the given option
+    - Also when you hover over a cell with a tower on it, it should display a small menu near it with some info about its stats and upgrades
+    - SUGGESTION: Try out Bootstrap.css to make this easier
+
+3. REBALANCING THE GAME 
+    - Vehicles should take away more cleanliness
+    - Garbage trucks are good but we should include more variety in the early-game
+    - The only real "difficult" vehicle is the garbage truck
+    - HUGE difficulty gap between levels 24 and 25, make the ones leading up to 25 more difficult as well
+    - Make upgrades more enticing -- there's no real motivation to pick them over buying a next-level tower yet
+    - Add tower degredation!!!!
+
+4. Re-skinning the game to comply with new prompt (the wifi thing -- we gotta collectively brainstorm about that)
+
+5. Add various new features (brainstorm -- we have time now, but don't procrastinate)
+
+6. Maybe create algorithm for random map generation (in addition to the 4 premade maps of course)
+  
+||  LIST O' BUGS: ||
+
+1. Upgrades for towers aren't working
+    - I can only confirm this for defensive towers as upgrading their damage yielded no damage increases
+    
+2. For some reason the identifier in the shop doesn't work correctly for the oil production tower
+    - It displays as [Object Object]

@@ -1,0 +1,71 @@
+// OVERVIEW OF RECENT ADDITIONS AND CHANGES MADE TO THE GAME CODE //
+
+NOTE: I'm going to try to explain the current state of the code in some sort of order that hopefully makes some sense
+
+CTD v0.2.0 (v0.1.x was the table versions)
+
+1. GENERATING THE MAP FROM THE ORIGINAL MAP FUNCTIONS
+
+    I. BACK-END: (non-fabric.js-specific and conceptual)
+    
+        - The same in essence as it was with the table-based version of CTD
+        
+        - Functions used: 
+                populateMap()       --> Essentially just controls which map to call (right now it just has map1(), etc.)
+                generateRoadArray() --> Exactly same as before; stores all road terrain obj's in an array
+                sortRoadArray()     --> Just sorts roadArray according to roadNum using a basic selection sort
+                generatePathNodes() --> Stores start point, end point, and all corner road terrain obj's in an array (see below regarding nodes)
+                lookforRoad()       --> Rewritten for canvas, but still written recursively as a helper method for applyNumtoRoad()
+                applyNumtoRoad()    --> Rewritten for canvas, still properly sets roadNums to all road terrain obj's in the correct order
+                load(fn, t, param)  --> Ensures all initialization functions are executed in the proper order using a dynamic setTimeouts
+                                        fn- the function name without parenthesis, t- the delay, param- any parameter needed for the function fn
+                            
+        - Nodes Overview: 
+                The way in which we decided to have the vehicle animations work is in a point-to-point / node-based system. By this I mean starting from the beginning road
+                terrain object (as the starting point, or node), we have the car translate in either the x or y direction until it reaches the x and y coordinates of the next
+                corner road terrain object, aka the next node. Once it reaches the next node, it rotates either +90 or -90 degrees and then repeats this until it reaches the
+                final node, meaning the end of the path. In order to best do this, we store all nodes in an array called pathNodes to iterate through. Also, since this is created 
+                after roadArray is already sorted, it also is in order!
+                
+        - More on node generation and how they are used in the game:
+                "Nodes" represent the points the vehicles travel to. They include the starting position of the vehicle, all of the corner road spaces, and the end point of the vehicle.
+                So, to make this work, we created two arrays, pathNodes and fabricPathNodes.
+                    --> pathNodes stores all of the terrain objects corresponding to the starting point, the corner road spaces, and the end point in order
+                    --> fabricPathNodes mirrors pathNodes, but represent the actual image objects that show up on canvas. For example, the first road space on the canvas is gonna be 
+                        fabricPathNodes[0], which corresponds to pathNodes[0]. You can think of this like fabricPathNodes is the front-end representation of the road objects and 
+                        pathNodes is the backend representation of it. So, most of our sorting and algorithmic stuff uses our normal backend arrays and stuff, and then we display the
+                        outcomes using the fabric objects.
+                After we first create and sort the roadArray, we create the pathNodes array in mapGrid.js by just iterating through the sorted roadArray and storing the corner road 
+                objects, the start road object, and the end road object into pathNodes. Now that we have the nodes we need, we needed to have the vehicles actually be able to travel
+                from node to node (basically start point to the first corner, then first corner to the second corner, etc) in straight line segments followed by 90deg turns. To
+                achieve this, we needed to represent the pathNodes road objects using fabric's objects so that we can display and animate the car. This is covered in Section II.
+                
+    
+    II. FRONT-END: (fabric.js-specific and displayed on canvas)
+        
+        - Functions used:
+                drawImage(arr,x,y)  --> Using the img source from the object at arr[x][y], it creates a fabric object off of it and passes it to edit() with the object's info
+                drawMap()           --> Using the original mapGrid array, it loops through mapGrid and calls drawImage() on every object, drawing the map onto the canvas
+                drawCar(idx)        --> WIP - Right now it calls drawImage to draw a car object onto the starting position so we can test -- we will change this to draw any vehicle
+                animateCar(car)     --> Essentially a loop that calls translation() and rotation() for each car everytime that car reaches a node
+                moveCar(car,dx,dy)  --> Applies the animation from the top (y-direction) or the left (x-direction) for each car depending on dx and dy determined by translation()
+                translation(car,idx)--> Finds the linear distance from the current node to the next node (dx and dy) and passes it into moveCar [NOTE: one value must always be 0]
+                rotation(car,idx)   --> Applies the rotation of the car depending on the current idx in degChange (which depends on which node the car is at)
+                lookforRoadDeg()    --> Determines what direction to rotate the vehicle at the node (+90 or -90) depending on the road objects' orientations before and after it. This
+                                        only runs once, so it creates an array called degChange of all the degree values at each node in order, so we just iterate through this in 
+                                        rotation. [NOTE: btw clockwise is +90 and counterclockwise is -90]
+                edit(obj,type,x,y)  --> Where each fabric object is styled and saved into properly sorted arrays. In fabric there's no real good way to access a specific fabric object,
+                                        especially when they're unordered, so we created the fabricPathNodes, fabricPath, and carObjs arrays.
+                                            + fabricPathNodes stores all of the nodes in the same order as the pathNodes array, essentially being the fabric version of it
+                                            + pathNodes is just an array of all road objects for fabric, aka the fabric version of roadArray -- used for lookForRoadDeg()
+                                            + carObjs is an array of all the fabric vehicle objects -- used in spawning, animation, and soon to be despawning and tower targeting
+        
+2. QUESTIONS:
+    
+    # If you still have any questions feel free to ask me or jose (mock has less experience with it atm but you can ask him too) and we'll elaborate more if we can.
+
+    # I hope this helps!
+
+
+
+- Jeremy
