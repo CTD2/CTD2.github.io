@@ -43,7 +43,10 @@ function upgradeFireRate()
     PLAYER.money -= parseInt(tower.cost*0.25);
     tower.cost += parseInt(tower.cost*0.25);
     //maybe increase energy consumption
-    tower.rate += Math.ceil(tower.damage*0.10);
+    tower.rate += Math.ceil(tower.rate*0.10);
+    towerObjs[index].fireRate = Math.ceil(16/tower.rate);
+    towerObjs[index].frameDelay = 0;
+    
     tower.sell += parseInt(tower.sell*0.2);
     displayHUD();
     console.log("Tower Rate Upgraded: "+ tower.rate);
