@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<!--<link rel="icon" href="favicon.ico">-->
+		<title>CTD II: Return to the City</title>
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="gameStyle.css">
+		<!-- SCRIPTS -->
+		<script type="text/javascript" src="fabric.min.js"></script>
+		
+		<script>
+			function initialize()
+			{
+				var levelCountBox;
+				var levelNum;
+				var startBtn;
+				var infoBox = $("#infoBox");
+				var menu = $("#menu");
+				var shopMenu = $("#shopMenu");
+				var upgradeMenu = $("#upgradeMenu");
+				
+				var container = $("#container");
+				var mainMenu = $("#mainMenu");
+				songs = ["elevator0","elevator1","elevator2","elevator3", "elevator4", "elevator5", "elevator6", "elevator7", "elevator8"] ;
+				music = document.getElementById("music")
+				randSong = parseInt(Math.random()*songs.length) ;
+				music.src = "Music/" + songs[randSong] + ".mp3";
+			}
+			function nextSong()
+			{
+				randSong = (randSong+1)%songs.length ;
+				music.src = "Music/" + songs[randSong] + ".mp3";
+			}
+			
+			function showElements()
+			{
+				var gameScreenElements = $(".gameScreen");
+				for(var i = 0; i < gameScreenElements.length; i++)
+				{
+					gameScreenElements[i].style.display = 'initial';
+				}
+				menu.style.display = 'block';
+				container.style.backgroundImage = "url('City-Skyline-Frame.png')" ;
+			}
+			
+			function hideElements()
+			{
+				var gameScreenElements = $(".gameScreen");
+				for(var i = 0; i < gameScreenElements.length; i++)
+				{
+					gameScreenElements[i].style.display = 'none';
+				}
+				menu.style.display = 'none';
+				shopMenu.style.display = 'none';
+				container.style.backgroundImage = "url('blank.png')";
+			}
+		</script>
+		
+	</head>
+	<body onload="initialize();" style = "background-image: url('NYC.jpeg');background-size: 100% 100%;background-repeat: no-repeat;background-color:black;">
+	<span style = "position:fixed;">
+		<audio id = "music" controls  loop src = ""></audio><br />
+		<a href="#" onclick="nextSong();" class="btn btn-default">Next Song</a>
+	</span>
+	<!--<img src = "City-Skyline-Frame.png" style = "z-index:-10; width:100%; display:block; position:absolute;" />-->
+	<div id="container" style = "background-image: url('blank.png');background-size: 100% 100%;background-repeat: no-repeat;">
+		
+		<h1>City Tower Defense II: Return to the City</h1>
+		
+		<div id = "mainMenu">
+			<h2 style="margin-top:30px;"><b>Main Menu</b></h2>
+			<hr />
+			<div class="btn-group btn-group-justified" id="mainMenuBtns" style="display:block;">
+			    <a href="#" onclick = "startGame(1); mainMenu.style.display = 'none'; showElements();" id="mainBtn" class="btn btn-primary btn-lg">
+			    	Map 1<br />
+			    	<img class = "mapPics" src = "MapPics/Map1.png" />
+			    </a>
+			    <a href="#" onclick = "startGame(2); mainMenu.style.display = 'none'; showElements();" id="mainBtn" class="btn btn-primary btn-lg">
+			    	Map 2<br />
+			    	<img class = "mapPics" src = "MapPics/Map2.png" />
+			    </a>
+			    <a href="#" onclick = "startGame(3); mainMenu.style.display = 'none'; showElements();" id="mainBtn" class="btn btn-primary btn-lg">
+			    	Map 3<br />
+			    	<img class = "mapPics" src = "MapPics/Map3.png" />
+			    </a>
+			    <a href="#" onclick = "startGame(4); mainMenu.style.display = 'none'; showElements();" id="mainBtn" class="btn btn-primary btn-lg">
+			    	Map 4<br />
+			    	<img class = "mapPics" src = "MapPics/Map4.png" />
+			    </a><br />
+			    <a href="#" onclick = "startGame(5); mainMenu.style.display = 'none'; showElements();" id="mainBtn" class="btn btn-primary btn-lg btn-block disabled" style="width:250px;left:375px;">
+			    	Procedural<br />
+			    	<img class = "mapPics" src = "MapPics/MapUnknown.png" />
+			    </a>
+			</div>
+			
+		</div>
+		
+		
+		<div class="btn-group-vertical" id = "menu">
+		    <a href="#" onclick="displayNodes();" class="btn btn-danger">[TOGGLE]</a>
+		    <a href="#" onclick="start();" class="btn btn-primary" id="startBtn">MOVE</a>
+		    <a href="#" onclick="alert('Click OK to resume.');" class="btn btn-default disabled" id="pauseBtn">PAUSE</a>
+		    <a href="#" onclick="quitPrompt(true);" class="btn btn-default" id="quitBtn">QUIT</a>
+		</div>
+		
+		<div class="btn-group-vertical" onmouseout="updateStatsMenu(undefined)" id = "shopMenu">
+		  <span href="#" class="btn btn-primary shop-label">Defensive<br />Towers</span>
+		  <a href="#" onclick="makeSprinklerOne();" onmouseover="updateStatsMenu(new defensiveTowerInfo(200, tileWidth*1.5, 5, 4, 1));" class="btn btn-default towers buy">FM Radio I</a>
+		  <a href="#" onclick="makeSprinklerTwo();" onmouseover="updateStatsMenu(new defensiveTowerInfo(375, tileWidth*1.5, 10, 4, 2));" class="btn btn-default towers buy">FM Radio II</a>
+		  <a href="#" onclick="makeSprinklerThree();" onmouseover="updateStatsMenu(new defensiveTowerInfo(700, tileWidth*1.5, 15, 4, 3));" class="btn btn-default towers buy">FM Radio III</a>
+		  
+		  <a href="#" onclick="makeWaterTowerOne();" onmouseover="updateStatsMenu(new defensiveTowerInfo(700, tileWidth*1.5, 20, 3, 3));" class="btn btn-default towers buy">Wifi Hotspot I</a>
+		  <a href="#" onclick="makeWaterTowerTwo();" onmouseover="updateStatsMenu(new defensiveTowerInfo(1350, tileWidth*1.5, 35, 3, 4));" class="btn btn-default towers buy">Wifi Hotspot II</a>
+		  <a href="#" onclick="makeWaterTowerThree();" onmouseover="updateStatsMenu(new defensiveTowerInfo(2600, tileWidth*1.5, 65, 3, 8));" class="btn btn-default towers buy">Wifi Hotspot III</a>
+		  
+		  <a href="#" onclick="makeFireHydrantOne();" onmouseover="updateStatsMenu(new defensiveTowerInfo(1400, tileWidth*3.5, 50, 2, 8));" class="btn btn-default towers buy">Satellite Dish I</a>
+		  <a href="#" onclick="makeFireHydrantTwo();" onmouseover="updateStatsMenu(new defensiveTowerInfo(2600, tileWidth*3.5, 90, 2, 17));" class="btn btn-default towers buy">Satellite Dish II</a>
+		  <a href="#" onclick="makeFireHydrantThree();" onmouseover="updateStatsMenu(new defensiveTowerInfo(4000, tileWidth*3.5, 160, 2, 29));" class="btn btn-default towers buy">Satellite Dish III</a>
+		  
+		  <a href="#" onclick="makeMechGeyserOne();" onmouseover="updateStatsMenu(new defensiveTowerInfo(2200, tileWidth*2.5, 100, 1, 15));" class="btn btn-default towers buy">AM Radio I</a>
+		  <a href="#" onclick="makeMechGeyserTwo();" onmouseover="updateStatsMenu(new defensiveTowerInfo(2400, tileWidth*2.5, 175, 1, 20));" class="btn btn-default towers buy">AM Radio II</a>
+		  <a href="#" onclick="makeMechGeyserThree();" onmouseover="updateStatsMenu(new defensiveTowerInfo(5000, tileWidth*2.5, 20, 1, 55));" class="btn btn-default towers buy">AM Radio III</a>
+		  
+		  <span href="#" class="btn btn-primary shop-label">Production<br />Towers</span>
+		  <a href="#" onclick="makeHydroPower();" onmouseover="updateStatsMenu(new productionTowerInfo(2000, 5));" class="btn btn-default towers buy">Hyrdo Turbine</a>
+		  <a href="#" onclick="makeSolarPower();" onmouseover="updateStatsMenu(new productionTowerInfo(1750, 3));" class="btn btn-default towers buy">Solar Panels</a>
+		  <a href="#" onclick="makeOilPower();" onmouseover="updateStatsMenu(new productionTowerInfo(4500, 15));" class="btn btn-default towers buy">Oil Rig</a>
+		  <a href="#" onclick="makeNuclearPower();" onmouseover="updateStatsMenu(new productionTowerInfo(8500, 30));" class="btn btn-default towers buy">Nuclear Plant</a>
+		</div>
+		
+		<div class="btn-group-vertical" id = "upgradeMenu">
+		  <span href="#" class="btn btn-primary shop-label">Tower<br />Upgrades</span>
+		  <a href="#" onclick="upgradeDamage();" class="btn btn-default towers offensive">Inc. Damage</a>
+		  <a href="#" onclick="upgradeFireRate();" class="btn btn-default towers offensive">Inc. Fire Rate</a>
+		  <a href="#" onclick="upgradeRange();" class="btn btn-default towers offensive">Inc. Range</a>
+		  <a href="#" onclick="upgradeProduction();" class="btn btn-default towers production">Inc. Production</a>
+		  
+		  <span href="#" class="btn btn-primary shop-label">Tower<br />Stats</span>
+		  <span href="#" class="btn btn-default shop-stats">Price:<br />$<b id="sellPrice"></b></span>
+		  <span href="#" class="btn btn-default shop-stats">Damage:<br /><b id="dmg"></b></span>
+		  <span href="#" class="btn btn-default shop-stats">Range:<br /><b id="range"></b></span>
+		  <span href="#" class="btn btn-default shop-stats">Rate:<br /><b id="rate"></b> shots/sec</span>
+		  <span href="#" class="btn btn-default shop-stats">Consumption:<br /><b id="consumption"></b> units/shot</span>
+		  <span href="#" class="btn btn-default shop-stats">Production:<br /><b id="production"></b> units/sec</span>
+		  
+		  <a href="#" onclick="sellTower();" class="btn btn-danger towers sell">Sell Tower</a>
+		</div>
+		
+		<!--<div id = "infoBox"></div>-->
+		<div class="alert alert-dismissible alert-danger" id = "infoBox">
+		  <button type="button" class="close" onclick="dismissMessage();">&times;</button> <!--data-dismiss="alert"-->
+		  <strong><span id = "infoBoxContent"></span></strong>
+		</div>
+		
+		<h4 id = "levelCounter" class = "gameScreen">Level: <span id = "levelNumber"></span></h4>
+		
+		<canvas id="c" class = "gameScreen" width="800" height="800"></canvas>
+		
+	</div>	
+	</body>
+	<!--<script type="text/javascript" src="preLoader.js"></script>-->
+		<script type="text/javascript" src="Objects.js"></script>
+		<script type="text/javascript" src="Maps.js"></script>
+		<script type="text/javascript" src="mapGrid.js"></script>
+		<script type="text/javascript" src="Towers.js"></script>
+		<script type="text/javascript" src="vehicles.js"></script>
+		<script type="text/javascript" src="canvasTesting.js"></script>
+		<script type="text/javascript" src="Game.js"></script>
+		<script type="text/javascript" src="levels.js"></script>
+		<script type="text/javascript" src="hudInfo.js"></script>
+		
+</html>
