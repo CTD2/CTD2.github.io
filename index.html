@@ -62,17 +62,17 @@
 	<body onload="initialize();" style = "background-image: url('NYC.jpeg');background-size: 100% 100%;background-repeat: no-repeat;background-color:black;">
 	<span style = "position:fixed;">
 		<audio id = "music" controls autoplay loop src = ""></audio><br />
-		<a href="#" onclick="nextSong();" class="btn btn-default">Next Song</a>
+		<a href="#" onclick="nextSong();" class="btn btn-info">Next Song</a>
 	</span>
 	<!--<img src = "City-Skyline-Frame.png" style = "z-index:-10; width:100%; display:block; position:absolute;" />-->
 	<div id="container" style = "background-image: url('blank.png');background-size: 100% 100%;background-repeat: no-repeat;">
 		
 		<h1>City Tower Defense II: Return to the City</h1>
 		<div id = "mainMenu">
-			<h2 style="margin-top:30px;"><b>Main Menu</b></h2>
+			<h2 style="margin-top:30px;"><strong>Main Menu</strong></h2>
 			<hr />
 			<div class="btn-group btn-group-justified" id="mainMenuBtns" style="display:block;">
-			<a href="rules.html"  class="btn btn-default" style = "margin:auto;">GAME RULES</a><br />
+			<a href="rules.html"  class="btn btn-primary" style = "margin:auto;">GAME RULES</a><br />
 			    <a href="#" onclick = "startGame(1); mainMenu.style.display = 'none'; showElements();" id="mainBtn" class="btn btn-primary btn-lg">
 			    	Map 1<br />
 			    	<img class = "mapPics" src = "MapPics/Map1.png" />
@@ -99,7 +99,7 @@
 		
 		
 		<div class="btn-group-vertical" id = "menu">
-		    <a href="#" onclick="displayNodes();" class="btn btn-danger">[TOGGLE]</a>
+		    <a href="#" onclick="displayNodes();" class="btn btn-danger">DISPLAY<br />RANGES</a>
 		    <a href="#" onclick="start();" class="btn btn-primary" id="startBtn">MOVE</a>
 		    <a href="#" onclick="alert('Click OK to resume.');" class="btn btn-default disabled" id="pauseBtn">PAUSE</a>
 		    <a href="#" onclick="quitPrompt(true);" class="btn btn-default" id="quitBtn">QUIT</a>
@@ -124,22 +124,22 @@
 		  <a href="#" onclick="makeMechGeyserThree();" onmouseover="updateStatsMenu(new defensiveTowerInfo(5000, tileWidth*2.5, 300, 1, 55));" class="btn btn-default towers buy">AM Radio III</a>
 		  
 		  <span href="#" class="btn btn-primary shop-label">Production<br />Towers</span>
-		  <a href="#" onclick="makeHydroPower();" onmouseover="updateStatsMenu(new productionTowerInfo(2000, 5));" class="btn btn-default towers buy">Hyrdo Turbine</a>
 		  <a href="#" onclick="makeSolarPower();" onmouseover="updateStatsMenu(new productionTowerInfo(1750, 3));" class="btn btn-default towers buy">Solar Panels</a>
+		  <a href="#" onclick="makeHydroPower();" onmouseover="updateStatsMenu(new productionTowerInfo(2000, 5));" class="btn btn-default towers buy">Hyrdo Turbine</a>
 		  <a href="#" onclick="makeOilPower();" onmouseover="updateStatsMenu(new productionTowerInfo(4500, 15));" class="btn btn-default towers buy">Oil Rig</a>
 		  <a href="#" onclick="makeNuclearPower();" onmouseover="updateStatsMenu(new productionTowerInfo(8500, 30));" class="btn btn-default towers buy">Nuclear Plant</a>
 		</div>
 		
 		<div class="btn-group-vertical" id = "upgradeMenu">
 		  <span href="#" class="btn btn-primary shop-label">Tower<br />Upgrades</span>
-		  <a href="#" onclick="upgradeDamage();" onmouseover="hoverUpgrades('damage');" onmouseout="upgradesMouseOut();" class="btn btn-default towers offensive">Inc. Damage</a>
+		  <a href="#" onclick="upgradeDamage();" onmouseover="hoverUpgrades('damage');" onmouseout="upgradesMouseOut();" class="btn btn-default towers offensive">Inc. Strength</a>
 		  <a href="#" onclick="upgradeFireRate();" onmouseover="hoverUpgrades('fireRate');" onmouseout="upgradesMouseOut();" class="btn btn-default towers offensive">Inc. Fire Rate</a>
 		  <a href="#" onclick="upgradeRange();" onmouseover="hoverUpgrades('range');" onmouseout="upgradesMouseOut();" class="btn btn-default towers offensive">Inc. Range</a>
 		  <a href="#" onclick="upgradeProduction();" onmouseover="hoverUpgrades('production');" onmouseout="upgradesMouseOut();" class="btn btn-default towers production">Inc. Production</a>
 		  
 		  <span href="#" class="btn btn-primary shop-label">Tower<br />Stats</span>
 		  <span href="#" class="btn btn-default shop-stats">Price:<br />$<b id="sellPrice"></b></span>
-		  <span href="#" class="btn btn-default shop-stats">Damage:<br /><b id="dmg"></b></span>
+		  <span href="#" class="btn btn-default shop-stats">Signal Strength:<br /><b id="dmg"></b></span>
 		  <span href="#" class="btn btn-default shop-stats">Range:<br /><b id="range"></b></span>
 		  <span href="#" class="btn btn-default shop-stats">Rate:<br /><b id="rate"></b> shots/sec</span>
 		  <span href="#" class="btn btn-default shop-stats">Consumption:<br /><b id="consumption"></b> units/shot</span>

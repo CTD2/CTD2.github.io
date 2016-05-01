@@ -61,6 +61,7 @@ function updateStatsMenu(tower, upgrade)
         {
             tower.source="production";
             tower.sell = parseInt(tower.cost);
+            tower.rate *= 0.5;
         }
         $('.production').addClass('disabled');
         $('.offensive').addClass('disabled');
@@ -92,13 +93,13 @@ function updateStatsMenu(tower, upgrade)
     		$('#range').html('N/A');
     		$('#rate').html('N/A');
     		$('#consumption').html('N/A');
-            $('#production').html(tower.rate);
+            $('#production').html(tower.rate*2);
         }
     }
     else
     {
         //upgradeMenu.style.display = 'initial';
-        $('#sellPrice').html(Math.ceil(tower.sell) + "+" + parseInt(tower.sell*0.25));
+        $('#sellPrice').html(/*Math.ceil(tower.sell) + "+" +*/ parseInt(tower.cost*0.25));
         if(upgrade == "damage")
         {
             $('#dmg').html(tower.damage + "+" + Math.ceil(tower.damage*0.15));
@@ -116,7 +117,7 @@ function updateStatsMenu(tower, upgrade)
         }
         else if(upgrade == "production")
         {
-            $('#production').html(tower.rate + "+" + tower.rate*2.5);
+            $('#production').html(tower.rate*2 + "+" + tower.rate*2.5);
             $('.production').removeClass('disabled');
         }
     }

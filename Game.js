@@ -11,8 +11,16 @@ var selectedXIdx;
 var selectedYIdx;
 var audio = new Audio('Shoot.wav');
 
-
 var projectiles = [];
+
+var focused = true;
+
+window.onfocus = function() {
+    focused = true;
+};
+window.onblur = function() {
+    focused = false;
+};
 
 function startGame(mapNum)
 {
@@ -48,33 +56,6 @@ function dismissMessage()
     infoBox.style.display = "none";
     infoBoxContent.innerHTML = "";
 }
-
-// function spawnVehicle(num, vehicle)
-// {
-// 	num--;
-	
-// 	if(num >= 0)
-// 	{
-// 		var VehicleNew;
-// 		if(vehicle.type == "bike")
-// 			VehicleNew = makeBike() ;
-// 		if(vehicle.type == "motorcycle")
-// 			VehicleNew = makeMotorcycle() ;
-// 		if(vehicle.type == "smartCar")
-// 			VehicleNew = makeSmartCar() ;
-// 		if(vehicle.type == "sportsCar")
-// 			VehicleNew = makeSportsCar() ;
-// 		if(vehicle.type == "SUV")
-// 			VehicleNew = makeSUV() ;
-// 		if(vehicle.type == "truck")
-// 			VehicleNew = makeTruck() ;
-// 		if(vehicle.type == "garbageTruck")
-// 			VehicleNew = makeGarbageTruck() ;
-		
-// 		PLAYER.vehicleArray.push(VehicleNew);
-// 		updateRoad();
-// 	}
-// }
 
 function spawnTower(tower)
 {
@@ -128,79 +109,72 @@ function start()
 	var interval = setInterval(
 		function()
 		{
-			PLAYER.power();
+			if(focused)
+			{
+				PLAYER.power();
+			}
 			
 			if(roundIsOver)
 			{
-				//console.log("end of interval is running before");
-				//vehicleQueue.shift();
 				clearInterval(interval);
-				//startBtn.disabled = false;
 				$("#startBtn").removeClass("disabled");
-				//$("#quitBtn").removeClass("disabled");
 				$("#pauseBtn").addClass("disabled");
 				roundIsOver = false;
-				
-				//maybe delay this or something to make it more obvious that it's a end-level bonus
-				PLAYER.money+=(150 + level*20); //can change this around if desired
+				PLAYER.money+=(150 + level*20); 
 				displayHUD();
-				//console.log("end of interval is running after");
 			}
 				
-		}, 500);//SPEEDVH); 
+		}, 500);
 		
 }
 function shootVehicle()
 {
-fabric.Image.fromURL("/projectiles/binary.png", (img)=>{
-	for(var i =0; i < towerObjs.length;i++)
-	{
-		for(var j = 0; j < carObjs.length; j++)
+	fabric.Image.fromURL("/projectiles/binary.png", (img)=>{
+		for(var i =0; i < towerObjs.length;i++)
 		{
-			if(PLAYER.vehicleArray[j].condition == "dirty" && PLAYER.towerArray[i].source.indexOf("offensiveTowers") >= 0 && PLAYER.energy >= PLAYER.towerArray[i].efficiency)
+			for(var j = 0; j < carObjs.length; j++)
 			{
-				var temp = PLAYER.towerArray[i];
-				var oriX = towerObjs[i].getCenterPoint().x;
-				var oriY = towerObjs[i].getCenterPoint().y;
-				var carX = carObjs[j].getCenterPoint().x;
-				var carY = carObjs[j].getCenterPoint().y;
-				var xLength = carX - oriX;
-				var yLength = carY - oriY;
-				
-				if(Math.abs(xLength) <= temp.range && Math.abs(yLength) <= temp.range)
+				if(PLAYER.vehicleArray[j].condition == "dirty" && PLAYER.towerArray[i].source.indexOf("offensiveTowers") >= 0 && PLAYER.energy >= PLAYER.towerArray[i].efficiency)
 				{
-					var hyLength = Math.sqrt((xLength*xLength)+(yLength*yLength));
-					var anglePOne = parseInt(Math.acos(xLength/hyLength)*180/Math.PI);
-					var anglePTwo = parseInt(Math.asin(yLength/hyLength)*180/Math.PI);
-					var angleRealDeg = (Math.abs(anglePTwo)/anglePTwo) * anglePOne;
-			        	 img.width = Math.abs(hyLength); 
-			        	 img.height = 5;
-			        	 img.angle=angleRealDeg;
-			        	 img.originX = 'center';
-			        	 img.originY = 'center';
-			        	 img.selectable = false;
-			        	 img.left = oriX + (xLength/2);
-			        	 img.top = oriY + (yLength/2);
-			        	 projectiles.push(img);
-			        	 canvas.add(img);
-			        	 canvas.renderAll.bind(canvas);
-			        	 setTimeout(function(){canvas.remove(projectiles[0]);projectiles.shift();},towerObjs[i].fireRate*5);
-			          	 //setTimeout(function(img){canvas.remove(img)},100);
-			        audio.play();
-					console.log("Vehicle:"+PLAYER.vehicleArray[j].hp+ " Angle shot: "+angleRealDeg);
-					PLAYER.towerArray[i].shoot(PLAYER.vehicleArray[j]);
-					carObjs[j]._element.src = PLAYER.vehicleArray[j].source;
-					break;
+					var temp = PLAYER.towerArray[i];
+					var oriX = towerObjs[i].getCenterPoint().x;
+					var oriY = towerObjs[i].getCenterPoint().y;
+					var carX = carObjs[j].getCenterPoint().x;
+					var carY = carObjs[j].getCenterPoint().y;
+					var xLength = carX - oriX;
+					var yLength = carY - oriY;
+					
+					if(Math.abs(xLength) <= temp.range && Math.abs(yLength) <= temp.range)
+					{
+						var hyLength = Math.sqrt((xLength*xLength)+(yLength*yLength));
+						var anglePOne = parseInt(Math.acos(xLength/hyLength)*180/Math.PI);
+						var anglePTwo = parseInt(Math.asin(yLength/hyLength)*180/Math.PI);
+						var angleRealDeg = (Math.abs(anglePTwo)/anglePTwo) * anglePOne;
+				        	 img.width = Math.abs(hyLength); 
+				        	 img.height = 5;
+				        	 img.angle=angleRealDeg;
+				        	 img.originX = 'center';
+				        	 img.originY = 'center';
+				        	 img.selectable = false;
+				        	 img.left = oriX + (xLength/2);
+				        	 img.top = oriY + (yLength/2);
+				        	 projectiles.push(img);
+				        	 canvas.add(img);
+				        	 canvas.renderAll.bind(canvas);
+				        	 setTimeout(function(){canvas.remove(projectiles[0]);projectiles.shift();},towerObjs[i].fireRate*5);
+				          	 //setTimeout(function(img){canvas.remove(img)},100);
+				        audio.play();
+						console.log("Vehicle:"+PLAYER.vehicleArray[j].hp+ " Angle shot: "+angleRealDeg);
+						PLAYER.towerArray[i].shoot(PLAYER.vehicleArray[j]);
+						carObjs[j]._element.src = PLAYER.vehicleArray[j].source;
+						break;
+					}
 				}
 			}
 		}
-	}
-});
+	});
 }
 
-//this doesn't actually stop the game
-//the way we've written the game thus far, we'd either just have to refresh the page
-//or build in a way for us to get rid of all vehicles and towers and all that
 function quitPrompt(confirmQuit)
 {
 	if(confirmQuit)
@@ -219,68 +193,53 @@ function quitPrompt(confirmQuit)
 		pathNodes.splice(0,pathNodes.length);
 		fabricPathNodes.splice(0,fabricPathNodes.length);
 		fabricMapGrid.splice(0,fabricMapGrid.length);
+		mapGrid.splice(0,mapGrid.length);
 		container.removeChild(document.getElementById("HUD_CONTAINER"));
 		level = 0 ;
 		hideElements();
 		mainMenu.style.display = "block";
 		vehicleQueue = null;
+		PLAYER = null;
 		degChange.splice(0,degChange.length);
 	}
 }
 
+// DEALING WITH CLICKING AWAY FROM TAB - warns users before they click a new tab
+// Set the name of the hidden property and the change event for visibility
 
-//for dropdown menus
-// function listDTowers()
-// {
-// 	document.getElementById("defenseDropdown").classList.toggle("show");
-	
-// 	window.onclick = function(event) 
-// 	{
-// 		if (!event.target.matches('.defenseDropdownBtn')) 
-// 		{
-// 			var dropdowns = document.getElementsByClassName("dropdownContent");
-// 			for (var i = 0; i < dropdowns.length; i++) 
-// 			{
-// 				var openDropdown = dropdowns[i];
-//   				if (openDropdown.classList.contains('show')) 
-//   					openDropdown.classList.remove('show');
-//   			}
-//   		}
-// 	}
+// var hidden, visibilityChange; 
+// if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
+//   hidden = "hidden";
+//   visibilityChange = "visibilitychange";
+// } else if (typeof document.mozHidden !== "undefined") {
+//   hidden = "mozHidden";
+//   visibilityChange = "mozvisibilitychange";
+// } else if (typeof document.msHidden !== "undefined") {
+//   hidden = "msHidden";
+//   visibilityChange = "msvisibilitychange";
+// } else if (typeof document.webkitHidden !== "undefined") {
+//   hidden = "webkitHidden";
+//   visibilityChange = "webkitvisibilitychange";
 // }
-// function listPTowers()
-// {
-// 	document.getElementById("productionDropdown").classList.toggle("show");
+
+// // Throws the warning
+// function handleVisibilityChange() {
+//   if (document[hidden] && SPAWNING) {
 	
-// 	window.onclick = function(event) 
-// 	{
-// 		if (!event.target.matches('.productionDropdownBtn')) 
-// 		{
-// 			var dropdowns = document.getElementsByClassName("dropdownContent");
-// 			for (var i = 0; i < dropdowns.length; i++) 
-// 			{
-// 				var openDropdown = dropdowns[i];
-//   				if (openDropdown.classList.contains('show')) 
-//   					openDropdown.classList.remove('show');
-//   			}
-//   		}
-// 	}
+//     window.alert("WARNING: Clicking away from this tab while vehicles are spawning may cause issues with gameplay. We strongly advise against it until all vehicles have spawned.");
+	
+//     document.removeEventListener(visibilityChange, handleVisibilityChange, false);
+	
+//     //window.blur();
+//     window.focus();
+//   }
 // }
-// function listUpgrades()
-// {
-// 	document.getElementById("upgradesDropdown").classList.toggle("show");
-	
-// 	window.onclick = function(event) 
-// 	{
-// 		if (!event.target.matches('.upgradesDropdownBtn')) 
-// 		{
-// 			var dropdowns = document.getElementsByClassName("dropdownContent");
-// 			for (var i = 0; i < dropdowns.length; i++) 
-// 			{
-// 				var openDropdown = dropdowns[i];
-//   				if (openDropdown.classList.contains('show')) 
-//   					openDropdown.classList.remove('show');
-//   			}
-//   		}
-// 	}
+
+// // Warn if the browser doesn't support addEventListener or the Page Visibility API
+// if (typeof document.addEventListener === "undefined" || 
+//   typeof document[hidden] === "undefined") {
+//   alert("The Page Visibility API is not supported with this browser. We suggest updating your browser for an optimal experience.");
+// } else {
+//   // Handle page visibility change   
+//   document.addEventListener(visibilityChange, handleVisibilityChange, false);
 // }

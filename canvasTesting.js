@@ -3,7 +3,7 @@ var PLAYER;
 var CONTENT_WIDTH = 800, CONTENT_HEIGHT = 800;
 var TILES_PER_SIDE = 10;
 var tileWidth = CONTENT_WIDTH/TILES_PER_SIDE;
-var RUNNING = false; // used for the changing tab warning added at the bottom of this page -- ignore for now
+var SPAWNING = false; // used for the changing tab warning added at the bottom of this page -- ignore for now
 var GAMESTART = true;
 var TURN =true;
 var VELOCITY = 2;
@@ -97,18 +97,6 @@ var selectedFilter = new fabric.Image.filters.Tint({
 
 function displayNodes()
 {
-    // Display pathNodes 
-    // if(fabricPathNodes[0].filters.length < 1)
-    //     for(var j = 0; j < fabricPathNodes.length; j++) {
-    //         fabricPathNodes[j].filters.push(filter);
-    //         fabricPathNodes[j].applyFilters(canvas.renderAll.bind(canvas));
-    //     }
-    // else
-    //     for(var j = 0; j < fabricPathNodes.length; j++) {
-    //         fabricPathNodes[j].filters.pop(filter);
-    //         fabricPathNodes[j].applyFilters(canvas.renderAll.bind(canvas));
-    //     }
-    
     if(towerRanges.length == 0)
         for(var i = 0; i < towerObjs.length; i++) {
             if(PLAYER.towerArray[i] instanceof OffensiveTower) { //if this tower is an offensive tower
@@ -127,11 +115,12 @@ function displayNodes()
 
 function spawnEnemies()
 {
+    SPAWNING = true;
     if(level%10 == 0){
         PLAYER.cleanliness+=((100-PLAYER.cleanliness)/2);
         displayHUD();
     }
-    RUNNING = true;
+    SPAWNING = true;
     var i = 0;
     carCounter = 0;
     animateCars();
@@ -141,8 +130,10 @@ function spawnEnemies()
              drawCar(i, vehicleQueue.vehicles[i]);
           }
           i++;
-          if (vehicleQueue != null && i < vehicleQueue.vehicles.length) {
+          if(vehicleQueue != null && i < vehicleQueue.vehicles.length) {
              loop();
+          } else {
+              SPAWNING = false;
           }
        }, 1000)
     }
