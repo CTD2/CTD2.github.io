@@ -39,7 +39,6 @@ window.cancelRequestAnimFrame = (function(){
 var canvas = new fabric.Canvas('c', {renderOnAddRemove: false}, {stateful: false});
 fabric.Group.prototype.hasControls = false;
 canvas.selection = false;
-canvas.filters = [];
 
 canvas.on('mouse:over', function (e) {
     if (fabricPath.indexOf(e.target) > -1) { //if hovering over road obj
