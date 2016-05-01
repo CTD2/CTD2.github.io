@@ -116,7 +116,7 @@ function updateStatsMenu(tower, upgrade)
         else if(upgrade == "production")
         {
             
-            $('#production').html(tower.rate*2 + "+" + tower.rate*0.5);
+            $('#production').html(tower.rate*2 + "+" + tower.rate*1.5);
             $('.production').removeClass('disabled');
         }
     }
