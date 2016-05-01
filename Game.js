@@ -98,11 +98,8 @@ function upgradesMouseOut()
 
 function start()
 {
-	//startBtn.disabled = true;
-	$("#startBtn").addClass("disabled"); //using JQuery to disable and reenable buttons bc we're using the pretty bootstrap buttons
-	//$("#quitBtn").addClass("disabled");
+	$("#startBtn").addClass("disabled");
 	$("#pauseBtn").removeClass("disabled");
-	//levelCountBox.style.display = "block" ;
 	levelRun();
 	spawnEnemies();
 	levelNum.innerHTML = level;
@@ -123,9 +120,7 @@ function start()
 				PLAYER.money+=(150 + level*20); 
 				displayHUD();
 			}
-				
 		}, 500);
-		
 }
 function shootVehicle()
 {
@@ -162,7 +157,6 @@ function shootVehicle()
 				        	 canvas.add(img);
 				        	 canvas.renderAll.bind(canvas);
 				        	 setTimeout(function(){canvas.remove(projectiles[0]);projectiles.shift();},towerObjs[i].fireRate*5);
-				          	 //setTimeout(function(img){canvas.remove(img)},100);
 				        audio.play();
 						console.log("Vehicle:"+PLAYER.vehicleArray[j].hp+ " Angle shot: "+angleRealDeg);
 						PLAYER.towerArray[i].shoot(PLAYER.vehicleArray[j]);
@@ -184,6 +178,7 @@ function quitPrompt(confirmQuit)
 
 	if(quit)
 	{
+		window.cancelRequestAnimFrame(render);
 		PLAYER.vehicleArray.splice(0,PLAYER.vehicleArray.length);
 		carObjs.splice(0,carObjs.length);
 		PLAYER.towerArray.splice(0,PLAYER.towerArray.length);
@@ -203,43 +198,3 @@ function quitPrompt(confirmQuit)
 		degChange.splice(0,degChange.length);
 	}
 }
-
-// DEALING WITH CLICKING AWAY FROM TAB - warns users before they click a new tab
-// Set the name of the hidden property and the change event for visibility
-
-// var hidden, visibilityChange; 
-// if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support 
-//   hidden = "hidden";
-//   visibilityChange = "visibilitychange";
-// } else if (typeof document.mozHidden !== "undefined") {
-//   hidden = "mozHidden";
-//   visibilityChange = "mozvisibilitychange";
-// } else if (typeof document.msHidden !== "undefined") {
-//   hidden = "msHidden";
-//   visibilityChange = "msvisibilitychange";
-// } else if (typeof document.webkitHidden !== "undefined") {
-//   hidden = "webkitHidden";
-//   visibilityChange = "webkitvisibilitychange";
-// }
-
-// // Throws the warning
-// function handleVisibilityChange() {
-//   if (document[hidden] && SPAWNING) {
-	
-//     window.alert("WARNING: Clicking away from this tab while vehicles are spawning may cause issues with gameplay. We strongly advise against it until all vehicles have spawned.");
-	
-//     document.removeEventListener(visibilityChange, handleVisibilityChange, false);
-	
-//     //window.blur();
-//     window.focus();
-//   }
-// }
-
-// // Warn if the browser doesn't support addEventListener or the Page Visibility API
-// if (typeof document.addEventListener === "undefined" || 
-//   typeof document[hidden] === "undefined") {
-//   alert("The Page Visibility API is not supported with this browser. We suggest updating your browser for an optimal experience.");
-// } else {
-//   // Handle page visibility change   
-//   document.addEventListener(visibilityChange, handleVisibilityChange, false);
-// }

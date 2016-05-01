@@ -1,5 +1,3 @@
-/*global player BLANK roadArray preLoad InsertTower cleanImages images dirtyImages updateRoad SPEEDVH numRoadEnd numVehicles moneyCounter energyCounter energyRateCounter cleanlinessCounter player gameScreen mapGrid Terrain LENGTH HEIGHT tbl tblAtt changeableGrid tblElements tdAtt towerGrid terrainGrid TEST TESTsrc TESTclass map1 map2 map3 map4 Vehicles vehicle1 InsertVehicle displayTerrain xVehicleStart yVehicleStart Scoordx Scoordy*/
-
 function initializeHUD() //MAKE MAIN MENU BUTTON
 {
     var hudContainer = document.createElement("div");
@@ -84,7 +82,8 @@ function updateStatsMenu(tower, upgrade)
             $('#dmg').html(tower.damage);
             $('#range').html(tower.range);
             $('#consumption').html(tower.efficiency);
-            $('#rate').html(tower.rate);
+            
+            $('#rate').html(((15/16)*tower.rate).toFixed(2));
         }
         else
         {
@@ -98,8 +97,7 @@ function updateStatsMenu(tower, upgrade)
     }
     else
     {
-        //upgradeMenu.style.display = 'initial';
-        $('#sellPrice').html(/*Math.ceil(tower.sell) + "+" +*/ parseInt(tower.cost*0.25));
+        $('#sellPrice').html( parseInt(tower.cost*0.25));
         if(upgrade == "damage")
         {
             $('#dmg').html(tower.damage + "+" + Math.ceil(tower.damage*0.15));
@@ -107,7 +105,7 @@ function updateStatsMenu(tower, upgrade)
         }
         else if(upgrade == "fireRate")
         {
-            $('#rate').html(tower.rate + "+" + Math.ceil(tower.rate*0.10));
+            $('#rate').html(((15/16)*tower.rate).toFixed(2) + "+" + ((15/16)*Math.ceil(tower.rate*0.10)).toFixed(2));
             $('.offensive').removeClass('disabled');
         }
         else if(upgrade == "range")
@@ -117,6 +115,7 @@ function updateStatsMenu(tower, upgrade)
         }
         else if(upgrade == "production")
         {
+            
             $('#production').html(tower.rate*2 + "+" + tower.rate*2.5);
             $('.production').removeClass('disabled');
         }

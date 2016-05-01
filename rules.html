@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<!--<link rel="icon" href="favicon.ico">-->
 		<title>CTD II: Return to the City</title>
 		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
@@ -18,7 +17,6 @@
 	<body onload="initialize();" style = "background-image: url('NYC.jpeg');background-size: 100% 100%;background-repeat: no-repeat;background-color:black;">
 	<span style = "position:fixed;">
 		<audio id = "music" controls autoplay loop src = "Music/elevator0.mp3"></audio><br />
-		<!--<a href="#" onclick="nextSong();" class="btn btn-default">Next Song</a>-->
 	</span>
 	<h1>City Tower Defense II: Return to the City</h1>
 	<div id="rulesbox" style = "background-image: url('blank.png');background-size: 80% 80%;background-repeat: no-repeat; background-color:rgba(50,50,50,.5);text-align:center;">
@@ -27,15 +25,15 @@
 		<hr />
 		<p class = "prules">Place Towers by clicking on a space, and selecting the tower you wish to place. The stats of a tower are
 		 on the right hand side of the screen.<br /><img class = "rules" src = "rulesPics/rules1.png" /></p>
-		<p class = "prules">There are two types of Towers, Defense and Production.<br /> Defense Towers use <b>Energy</b> to connect their
-		 signal to the incoming vehicles.<br />Production Towers create <b>Energy</b> at a set constant rate.</p>
+		<p class = "prules">There are two types of Towers: Defense and Production.<br /> Defense Towers use <b>Energy</b> to connect their
+		 signal to the incoming vehicles.<br />Production Towers create <b>Energy</b> at a constant rate.</p>
 		<p class = "prules">Some production towers can only be placed on certain terrain. For example, an <b>oil</b> rig can only be placed on 
 		an <b>oil</b> spot.</p><img class = "rules" src = "terrain/oil.png" style = "height:150px;width:150px;"/><br />
 		<p class = "prules">Likewise, <b>Hydro</b> power can only be produced on a <b>water</b> terrain.</p><img class = "rules" src = "terrain/water.png" style = "height:150px;width:150px;"/><br />
 		<p class = "prules">If the required <b>Energy</b> input of a tower exceeds the total energy stored, it will not be able to operate.</p>
 		<img class = "rules" src = "rulesPics/rules3.png" />
 		<p class = "prules">To keep <b>Energy</b> above 0, <b>Production Towers</b> need to be built. This will increase <b>Energy Rate</b>. As long 
-		as a level is in play, <b>Energy</b> will increase at a rate of <b>Energy Rate</b>.</p>
+		as a level is in play, <b>Energy</b> will increase at a constant rate of <b>Energy Rate</b>.</p>
 		<hr /><br />
 		<p class = "prules">A <b>disconnected</b> Vehicle can be identified by the empty red signal bars.<br /><img class = "rules" src = "dirty/bike.png" style = "height: 200px;width:200px;" />
 		<br />Once a vehicle is <b>connected</b>, the bars will become solid green.<br /><img class = "rules" src = "clean/bike.png" style = "height: 200px;width:200px;" /></p>
@@ -43,13 +41,14 @@
 		or reduce the city's <b>Connectivity</b> if the vehicle is <b>disconnected</b>.<br /><img class = "rules" src = "rulesPics/rules2.png" /></p><br />
 		<p class = "prules">The levels progressively get harder as they increase, up until level 25, when the game is over. After level 25, the 
 		player can keep playing until losing, but vehicles will spawn in random orders and amounts.</p>
-		<a href="index.html"  class="btn btn-default" style = "margin:auto;">BACK TO MENU</a>
+		<a href="index.html"  class="btn btn-default" style = "margin:auto;">BACK TO MENU</a><br /><br /><br />
+		<b>Game By: 
+		Matyas Fenyves, Jeremy De La Cruz, Qixin Chen, Jose Romano</b>
 		
 		
 		
 	
 		
-		<!--<div id = "infoBox"></div>-->
 		<div class="alert alert-dismissible alert-danger" id = "infoBox">
 		  <button type="button" class="close" onclick="dismissMessage();">&times;</button> <!--data-dismiss="alert"-->
 		  <strong><span id = "infoBoxContent"></span></strong>
@@ -61,7 +60,6 @@
 		
 	</div>	
 	</body>
-	<!--<script type="text/javascript" src="preLoader.js"></script>-->
 		<script type="text/javascript" src="Objects.js"></script>
 		<script type="text/javascript" src="Maps.js"></script>
 		<script type="text/javascript" src="mapGrid.js"></script>

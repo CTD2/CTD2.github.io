@@ -77,8 +77,7 @@ canvas.observe('mouse:out', function (e) {
         fabricMapGrid[x][y].filters.splice(e.target.filters.indexOf(hoverFilter),1);
         fabricMapGrid[x][y].applyFilters(canvas.renderAll.bind(canvas));
     }
-        
-    //console.log(e.target);
+    
 });
 
 // FOR TESTING PURPOSES --- DIFFERENTIATES NODES
@@ -145,8 +144,6 @@ function drawMap()
     for(var i = 0; i < TILES_PER_SIDE; i++)
         for(var j = 0; j < TILES_PER_SIDE; j++)
             drawImage(mapGrid,i,j);
-  // canvas.selection = false;
-   // canvas.__canvases.push(canvas);
     lookforRoadDeg();
 }
 
@@ -176,9 +173,7 @@ function drawCar(idx, vehicle) // index within carObjs
         img.direction = 1;
         img.turnNumber = 0;
         img.turn = true;
-        //img.isRotating = false;
         canvas.add(img);
-        //animateCar(carObjs[idx]);
     });
 }
 
@@ -189,7 +184,6 @@ function drawTower(terrainObj, towerSource)
         edit(img, "tower", undefined, undefined, terrainObj);
         canvas.add(img);
         canvas.renderAll();
-        // toggleMenu(terrainObj.coordX, terrainObj.coordY, img);
     });
 }
 
@@ -242,7 +236,6 @@ function animateCars()
                 vx = 0;
                 vy = 0;
                 
-                // vx *= degChange[car.previousNode]/90;
                 car.direction = degChange[car.previousNode]/-90;
                 
                 car.previousNode++;
@@ -282,7 +275,6 @@ function animateCars()
             car.vy = vy;
             
             i++;
-            
         } 
         else {
             var backendCar = PLAYER.vehicleArray[carObjs.indexOf(car)];
@@ -311,10 +303,6 @@ function animateCars()
             towerObjs[j].frameDelay++;
     }
     
-    // if(!GAMESTART){
-    //     fabric.util.cancelAnim
-    // }
-    
     render = fabric.util.requestAnimFrame(animateCars, canvas.getElement());
 	canvas.renderAll();	
 }
@@ -328,10 +316,7 @@ function translation(car, idx)//returns distance
         dx = 0;
         dy = 0;
     }
-        
-   
-     //moveCar(car, dx, dy,Math.abs(dx+dy));
-     //return Math.abs(dx+dy); //returns distance
+    
      
      var displacement = {
          dx: dx,
@@ -343,9 +328,6 @@ function translation(car, idx)//returns distance
 
 function rotation(car, idx)
 {
-    // var angleDeg = Math.atan2(fabricPathNodes[idx+1].getCenterPoint().y - fabricPathNodes[idx].getCenterPoint().y, 
-    //                           fabricPathNodes[idx+1].getCenterPoint().x - fabricPathNodes[idx].getCenterPoint().x) * 180 / Math.PI;
-        //angleDeg = degChange[idx]; //returns either 90 or -90
         setTimeout(function(){car.animate('angle', car.angle + degChange[idx], {
             onChange: canvas.renderAll.bind(canvas),
             duration: 300 //how fast it turns
@@ -408,22 +390,6 @@ function toggleMenu(x,y,fabricTowerObj)
     }
 }
 
-//use .getElement() to retrieve original HTML image element or .getSrc() to return original image path as String
-
-//FOR COLLISIONS USE 
-    //.intersectsWithObject(other) 
-    //.intersectsWithRect(pointTL, pointBR)
-    //.isContainedWithinObject(other) //fully contained within the area of another object
-    //.isContainedWithinRect(pointTL, pointBR) //fully contained within rect
-    //.remove()
-    //.straighten() //Straightens an object (rotating it from current angle to one of 0, 90, 180, 270, etc. depending on which is closer)
-    
-//check http://fabricjs.com/docs/fabric.Image.html for more on documentation
-
-//------------------------------------------------------------------------------------------------------
-
-//need this because JavaScript is asynchronous and this makes sure runs in sequence
-
 function edit(obj, type, x, y, selectedObj) 
 {
     obj.set('hasControls', false);
@@ -460,9 +426,6 @@ function edit(obj, type, x, y, selectedObj)
                     obj.applyFilters(canvas.renderAll.bind(canvas));
                 }
             });
-            // obj.on('mouseup', function() {
-                
-            // });
         }
     }
     
@@ -477,7 +440,7 @@ function edit(obj, type, x, y, selectedObj)
         carObjs.push(obj);
     }
     
-    if(type == "tower") //where selectedObj will be used
+    if(type == "tower")
     {
         obj.set({width: tileWidth, height: tileWidth, left: selectedObj.getCenterPoint().x, top: selectedObj.getCenterPoint().y});
         obj.set('selectable', false);

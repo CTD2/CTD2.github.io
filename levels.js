@@ -1,5 +1,4 @@
 var level = 0;
-// movementArray = [];
 var vehicleQueue;
   
 function addToQueue(vehicleCount, vehicleType) //repurposing this as a function that just adds the vehicles to a queue that will be iterated in the main interval
@@ -9,15 +8,7 @@ function addToQueue(vehicleCount, vehicleType) //repurposing this as a function 
 
 //dictates what vehicles spawn on what levels
 function levelRun()
-{ 
-  // var bike = makeBike() ;
-  // var motorcycle = makeMotorcycle() ;
-  // var smartCar = makeSmartCar() ;
-  // var sportsCar = makeSportsCar() ;
-  // var makeSUV = makemakeSUV() ;
-  // var makeTruck = makemakeTruck() ;
-  // var garbagemakeTruck = makeGarbagemakeTruck() ;
-  
+{
   level++ ;
   
   vehicleQueue = new queuedVehicles();
@@ -164,7 +155,6 @@ function levelRun()
     var random5 = Math.random()*(level - 13);
     var random6 = Math.random()*(level - 13);
 
-    
     addToQueue(random, makeBike) ;
     addToQueue(random1, makeMotorcycle);
     addToQueue(random2, makeSmartCar);
@@ -173,5 +163,4 @@ function levelRun()
     addToQueue(random5, makeTruck);
     addToQueue(random6, makeGarbageTruck);
   }
-  //.... garbagemakeTruck will be extremely strong, boss level...
 }

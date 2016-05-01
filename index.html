@@ -1,70 +1,16 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<!--<link rel="icon" href="favicon.ico">-->
 		<title>CTD II: Return to the City</title>
-		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="gameStyle.css">
-		<!-- SCRIPTS -->
-		<script type="text/javascript" src="fabric.min.js"></script>
-		
-		<script>
-			function initialize()
-			{
-				var levelCountBox;
-				var levelNum;
-				var startBtn;
-				var infoBox = $("#infoBox");
-				var menu = $("#menu");
-				var shopMenu = $("#shopMenu");
-				var upgradeMenu = $("#upgradeMenu");
-				
-				var container = $("#container");
-				var mainMenu = $("#mainMenu");
-				songs = ["elevator0","elevator1","elevator2","elevator3", "elevator4", "elevator5", "elevator6", "elevator7", "elevator8"] ;
-				music = document.getElementById("music")
-				randSong = parseInt(Math.random()*songs.length) ;
-				music.src = "Music/" + songs[randSong] + ".mp3";
-			}
-			function nextSong()
-			{
-				randSong = (randSong+1)%songs.length ;
-				music.src = "Music/" + songs[randSong] + ".mp3";
-			}
-			
-			function showElements()
-			{
-				var gameScreenElements = $(".gameScreen");
-				for(var i = 0; i < gameScreenElements.length; i++)
-				{
-					gameScreenElements[i].style.display = 'initial';
-				}
-				menu.style.display = 'block';
-				container.style.backgroundImage = "url('City-Skyline-Frame.png')" ;
-			}
-			
-			function hideElements()
-			{
-				var gameScreenElements = $(".gameScreen");
-				for(var i = 0; i < gameScreenElements.length; i++)
-				{
-					gameScreenElements[i].style.display = 'none';
-				}
-				menu.style.display = 'none';
-				shopMenu.style.display = 'none';
-				container.style.backgroundImage = "url('blank.png')";
-			}
-		</script>
-		
+		<link href='https://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
 	</head>
 	<body onload="initialize();" style = "background-image: url('NYC.jpeg');background-size: 100% 100%;background-repeat: no-repeat;background-color:black;">
 	<span style = "position:fixed;">
 		<audio id = "music" controls autoplay loop src = ""></audio><br />
 		<a href="#" onclick="nextSong();" class="btn btn-info">Next Song</a>
 	</span>
-	<!--<img src = "City-Skyline-Frame.png" style = "z-index:-10; width:100%; display:block; position:absolute;" />-->
 	<div id="container" style = "background-image: url('blank.png');background-size: 100% 100%;background-repeat: no-repeat;">
 		
 		<h1>City Tower Defense II: Return to the City</h1>
@@ -96,7 +42,6 @@
 			</div>
 			
 		</div>
-		
 		
 		<div class="btn-group-vertical" id = "menu">
 		    <a href="#" onclick="displayNodes();" class="btn btn-danger">DISPLAY<br />RANGES</a>
@@ -141,14 +86,13 @@
 		  <span href="#" class="btn btn-default shop-stats">Price:<br />$<b id="sellPrice"></b></span>
 		  <span href="#" class="btn btn-default shop-stats">Signal Strength:<br /><b id="dmg"></b></span>
 		  <span href="#" class="btn btn-default shop-stats">Range:<br /><b id="range"></b></span>
-		  <span href="#" class="btn btn-default shop-stats">Rate:<br /><b id="rate"></b> shots/sec</span>
+		  <span href="#" class="btn btn-default shop-stats">Rate:<br /><b id="rate"></b> shots/s</span>
 		  <span href="#" class="btn btn-default shop-stats">Consumption:<br /><b id="consumption"></b> units/shot</span>
-		  <span href="#" class="btn btn-default shop-stats">Production:<br /><b id="production"></b> units/sec</span>
+		  <span href="#" class="btn btn-default shop-stats">Production:<br /><b id="production"></b> units/s</span>
 		  
 		  <a href="#" onclick="sellTower();" class="btn btn-danger towers sell">Sell Tower</a>
 		</div>
 		
-		<!--<div id = "infoBox"></div>-->
 		<div class="alert alert-dismissible alert-danger" id = "infoBox">
 		  <button type="button" class="close" onclick="dismissMessage();">&times;</button> <!--data-dismiss="alert"-->
 		  <strong><span id = "infoBoxContent"></span></strong>
@@ -158,9 +102,63 @@
 		
 		<canvas id="c" class = "gameScreen" width="800" height="800"></canvas>
 		
-	</div>	
+	</div>	<br /><br /><br />
+		<b>Game By: 
+		Matyas Fenyves, Jeremy De La Cruz, Qixin Chen, Jose Romano</b>
 	</body>
-	<!--<script type="text/javascript" src="preLoader.js"></script>-->
+		<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="fabric.min.js"></script>
+		<script>
+			function initialize()
+			{
+				var levelCountBox;
+				var levelNum;
+				var startBtn;
+				var infoBox = $("#infoBox");
+				var menu = $("#menu");
+				var shopMenu = $("#shopMenu");
+				var upgradeMenu = $("#upgradeMenu");
+				var container = $("#container");
+				var mainMenu = $("#mainMenu");
+				
+				preLoad();
+				
+				songs = ["elevator0","elevator1","elevator2","elevator3", "elevator4", "elevator5", "elevator6", "elevator7", "elevator8"] ;
+				music = document.getElementById("music")
+				randSong = parseInt(Math.random()*songs.length) ;
+				music.src = "Music/" + songs[randSong] + ".mp3";
+			}
+			function nextSong()
+			{
+				randSong = (randSong+1)%songs.length ;
+				music.src = "Music/" + songs[randSong] + ".mp3";
+			}
+			
+			function showElements()
+			{
+				var gameScreenElements = $(".gameScreen");
+				for(var i = 0; i < gameScreenElements.length; i++)
+				{
+					gameScreenElements[i].style.display = 'initial';
+				}
+				menu.style.display = 'block';
+				container.style.backgroundImage = "url('City-Skyline-Frame.png')" ;
+			}
+			
+			function hideElements()
+			{
+				var gameScreenElements = $(".gameScreen");
+				for(var i = 0; i < gameScreenElements.length; i++)
+				{
+					gameScreenElements[i].style.display = 'none';
+				}
+				menu.style.display = 'none';
+				shopMenu.style.display = 'none';
+				container.style.backgroundImage = "url('blank.png')";
+			}
+		</script>
+		<script type="text/javascript" src="preLoader.js"></script>
+		<script type="text/javascript" src="Objects.js"></script>
 		<script type="text/javascript" src="Objects.js"></script>
 		<script type="text/javascript" src="Maps.js"></script>
 		<script type="text/javascript" src="mapGrid.js"></script>

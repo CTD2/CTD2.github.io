@@ -1,5 +1,3 @@
-/*globalplayer preLoad cleanImages images dirtyImages updateRoad SPEEDVH numRoadEnd numVehicles gameScreen mapGrid Terrain LENGTH HEIGHT tbl tblAtt changeableGrid tblElements tdAtt towerGrid terrainGrid TEST TESTsrc TESTclass map1 map2 map3 map4 Vehicles vehicle1 InsertVehicle displayTerrain xVehicleStart yVehicleStart Scoordx Scoordy*/
-
 //MAP CHOICES
 function generateGrass() {
 	mapGrid = [];
@@ -69,7 +67,6 @@ function map1() //GROSS
 	mapGrid[2][9] = new Terrain("road", "roadDown.png", true, 270);
 }
 
-
 function map2() {
 	numRoadEnd = 32;
 	Scoordx = 1;
@@ -97,7 +94,6 @@ function map2() {
 		mapGrid[7][i] = new Terrain("road", "roadDown.png", true, 270);
 	}
 }
-
 
 function map3() {
 	numRoadEnd = 26;
@@ -131,7 +127,6 @@ function map3() {
 	mapGrid[0][8] = new Terrain("road", "roadSE.png", true, 270);
 	mapGrid[0][9] = new Terrain("road", "roadDown.png", true, 270);
 }
-
 
 function map4() {
 	numRoadEnd = 17;
@@ -180,55 +175,6 @@ function mapRand()
 		Xcoord += 1;
 	Scoordx = Xcoord;
 	Scoordy = 0;
-	/*
-	mapGrid[Xcoord][0] = new Terrain("road", "roadDown.png", true, 270);
-	var nextRoad = parseInt(Math.random()*3);
-	
-	while(Ycoord < 9)
-	{
-		// var canGoUp = true ; ;
-		// for(var i = 0 ; i < Ycoord ; i++)
-		// {
-		// 	if(mapGrid[Xcoord-1][i] == "road" && mapGrid[Xcoord-1][i] == "water" && mapGrid[Xcoord+1][i] == "road" && mapGrid[Xcoord+1][i] == "water")
-		// 		canGoUp = false ;
-		// }
-		
-		if(nextRoad == 0  && Xcoord < 9 && mapGrid[Xcoord+1][Ycoord].type != "road" && mapGrid[Xcoord+1][Ycoord].type != "water")
-		{
-			Xcoord++ ;
-			mapGrid[Xcoord][Ycoord] = new Terrain("road", "roadSide.png", true, 0);
-			mapGrid[Xcoord-1][Ycoord].direction = 0 ;
-			if((Ycoord >= 0 && !mapGrid[Xcoord-1][Ycoord].direction == 0) || mapGrid[Xcoord-1][Ycoord-1].direction == 270 || mapGrid[Xcoord][Ycoord-1].source.indexOf("SE") > -1 || mapGrid[Xcoord][Ycoord-1].source.indexOf("SW") > -1)
-				mapGrid[Xcoord-1][Ycoord] = new Terrain("road", "roadNE.png", true, 0);
-		}
-		else if(nextRoad == 1 && Xcoord > 0 && mapGrid[Xcoord-1][Ycoord].type != "road" && mapGrid[Xcoord-1][Ycoord].type != "water")
-		{
-			Xcoord-- ;
-			mapGrid[Xcoord][Ycoord] = new Terrain("road", "roadSide.png", true, 180);
-			mapGrid[Xcoord+1][Ycoord].direction = 180 ;
-			if((Ycoord-1 < 0 && mapGrid[Xcoord+1][Ycoord].direction == 0) || mapGrid[Xcoord+1][Ycoord-1].direction == 270 || mapGrid[Xcoord][Ycoord-1].source.indexOf("SE") > -1 || mapGrid[Xcoord][Ycoord-1].source.indexOf("SW") > -1)
-				mapGrid[Xcoord+1][Ycoord] = new Terrain("road", "roadNW.png", true, 180);
-		}
-		else if(nextRoad == 2 && mapGrid[Xcoord][Ycoord+1].type != "road" && mapGrid[Xcoord][Ycoord+1].type != "water")
-		{
-			Ycoord++ ;
-			mapGrid[Xcoord][Ycoord] = new Terrain("road", "roadDown.png", true, 270);
-			mapGrid[Xcoord][Ycoord+1].direction = 270 ;
-			if(Xcoord-1 < 0 || mapGrid[Xcoord-1][Ycoord-1].direction == 0)
-				mapGrid[Xcoord][Ycoord+1] = new Terrain("road", "roadSW.png", true, 270);
-			// else if(Xcoord-1 < 0 || mapGrid[Xcoord+1][Ycoord-1].direction == 0)
-			// 	mapGrid[Xcoord-1][Ycoord] = new Terrain("road", "roadSE.png", true, 270);
-		}
-		// else if(nextRoad == 3 && Ycoord > 0 && mapGrid[Xcoord][Ycoord-1].type != "road" && mapGrid[Xcoord][Ycoord-1].type != "water" && canGoUp)
-		// {
-		// 	Ycoord-- ;
-		// 	mapGrid[Xcoord][Ycoord] = new Terrain("road", "roadDown.png", true, 270);
-		// }
-		nextRoad = parseInt(Math.random()*3);
-		
-		
-	}
-	*/
 	
 	roads = 1 ;
 	var begin = 270 ;
@@ -236,7 +182,6 @@ function mapRand()
 	placeRoad(Xcoord, Ycoord+1, begin) ;
 	
 	numRoadEnd = roads ;
-	
 	
 	var numOil = parseInt(Math.random()*5)+1;
 	for(var i = 0 ; i < numOil ; i++)
@@ -308,7 +253,6 @@ function placeRoad(x, y, prevDir)
 			placeRoad(x, y+1, dir) ;
 		}
 		
-		
 		if(prevDir == 0 && dir == 180)
 		{
 			placeRoad(x, y, prevDir) ;
@@ -334,15 +278,3 @@ function getDirection(n, a)
 	if(nextRoad == 2)
 		return 180 ;
 }
-
-/*function makeMap()
-{
-	var x = Math.random;
-	if(x == 0)
-	{
-		for(var i = 0; i < 10)
-		{
-			
-		}
-	}
-}*/
