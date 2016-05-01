@@ -41,7 +41,6 @@ fabric.Group.prototype.hasControls = false;
 canvas.selection = false;
 
 canvas.observe('mouse:over', function (e) {
-	if(e.target == undefined){return;}
     if (fabricPath.indexOf(e.target) > -1) { //if hovering over road obj
         e.target.hoverCursor = 'not-allowed';
     } 
@@ -66,10 +65,9 @@ canvas.observe('mouse:over', function (e) {
 });
 
 canvas.observe('mouse:out', function (e) {
-	if(e.target == undefined){return;}
     var isRangeObj = towerRanges.indexOf(e.target) > -1;
     var isTowerObj = towerObjs.indexOf(e.target) > -1;
-    if (!isRangeObj && e.target.filters.length > 0 && fabricPath.indexOf(e.target) < 0) {
+    if (e.target != undefined !isRangeObj && e.target.filters.length > 0 && fabricPath.indexOf(e.target) < 0) {
         e.target.filters.splice(e.target.filters.indexOf(hoverFilter),1);
         e.target.applyFilters(canvas.renderAll.bind(canvas));
     }
