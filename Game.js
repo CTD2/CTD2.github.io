@@ -158,7 +158,7 @@ function shootVehicle()
 				        	 canvas.renderAll.bind(canvas);
 				        	 setTimeout(function(){canvas.remove(projectiles[0]);projectiles.shift();},towerObjs[i].fireRate*5);
 				        audio.play();
-						console.log("Vehicle:"+PLAYER.vehicleArray[j].hp+ " Angle shot: "+angleRealDeg);
+						// console.log("Vehicle:"+PLAYER.vehicleArray[j].hp+ " Angle shot: "+angleRealDeg);
 						PLAYER.towerArray[i].shoot(PLAYER.vehicleArray[j]);
 						carObjs[j]._element.src = PLAYER.vehicleArray[j].source;
 						break;
