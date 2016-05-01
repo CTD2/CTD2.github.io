@@ -39,6 +39,7 @@ window.cancelRequestAnimFrame = (function(){
 var canvas = new fabric.Canvas('c', {renderOnAddRemove: false}, {stateful: false});
 fabric.Group.prototype.hasControls = false;
 canvas.selection = false;
+canvas.filters = [];
 
 canvas.on('mouse:over', function (e) {
     if (fabricPath.indexOf(e.target) > -1) { //if hovering over road obj
@@ -67,9 +68,7 @@ canvas.on('mouse:over', function (e) {
 canvas.on('mouse:out', function (e) {
     var isRangeObj = towerRanges.indexOf(e.target) > -1;
     var isTowerObj = towerObjs.indexOf(e.target) > -1;
-    var pointer = canvas.getPointer(e.e);
-  	var posX = pointer.x;
-    if (posX >= 0 && !isRangeObj && e.target.filters.length > 0 && fabricPath.indexOf(e.target) < 0) {
+    if (!isRangeObj && e.target.filters.length > 0 && fabricPath.indexOf(e.target) < 0) {
         e.target.filters.splice(e.target.filters.indexOf(hoverFilter),1);
         e.target.applyFilters(canvas.renderAll.bind(canvas));
     }
