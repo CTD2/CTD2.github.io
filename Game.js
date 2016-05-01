@@ -196,5 +196,6 @@ function quitPrompt(confirmQuit)
 		vehicleQueue = null;
 		PLAYER = null;
 		degChange.splice(0,degChange.length);
+		canvas.clear();
 	}
 }
