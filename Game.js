@@ -192,6 +192,7 @@ function quitPrompt(confirmQuit)
 		container.removeChild(document.getElementById("HUD_CONTAINER"));
 		level = 0 ;
 		hideElements();
+		upgradeMenu.style.display = "none";
 		mainMenu.style.display = "block";
 		vehicleQueue = null;
 		PLAYER = null;
