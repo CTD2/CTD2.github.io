@@ -67,7 +67,7 @@ canvas.observe('mouse:over', function (e) {
 canvas.observe('mouse:out', function (e) {
     var isRangeObj = towerRanges.indexOf(e.target) > -1;
     var isTowerObj = towerObjs.indexOf(e.target) > -1;
-    if (e.target != undefined !isRangeObj && e.target.filters.length > 0 && fabricPath.indexOf(e.target) < 0) {
+    if (e.target != undefined && !isRangeObj && e.target.filters.length > 0 && fabricPath.indexOf(e.target) < 0) {
         e.target.filters.splice(e.target.filters.indexOf(hoverFilter),1);
         e.target.applyFilters(canvas.renderAll.bind(canvas));
     }
