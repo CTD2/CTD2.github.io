@@ -65,7 +65,7 @@ canvas.on('mouse:over', function (e) {
 });
 
 canvas.on('mouse:out', function (e) {
-    var isRangeObj = towerRanges.indexOf(e.target) > -1;
+    var isRangeObj = /*towerRanges.indexOf(e.target) > -1;*/ e.target.type == "circle";
     var isTowerObj = towerObjs.indexOf(e.target) > -1;
     console.log(e + " , " + e.target);
     if (!isRangeObj && e.target.filters.length > 0 && fabricPath.indexOf(e.target) < 0) {
