@@ -3,7 +3,7 @@ var SHOP_OPEN = false;
 var roundIsOver = false;
 
 var STARTING_ENERGY = 100;
-var STARTING_MONEY = 2000;
+var STARTING_MONEY = 5000;
 
 var MENU_OPEN = false;
 var purchasedTower;
