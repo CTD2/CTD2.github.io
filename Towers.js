@@ -17,6 +17,7 @@ function upgradeDamage()
     //maybe increase energy consumption
     tower.damage += Math.ceil(tower.damage*0.15);
     tower.sell += parseInt(tower.sell*0.2);
+    tower.efficiency += parseInt(tower.efficiency*.35);
     displayHUD();
     console.log("Tower Damage Upgraded: "+ tower.damage);
     tower.upgrades++ ;
@@ -96,6 +97,7 @@ function upgradeRange(x, y)
     //maybe increase energy consumption
     tower.range += tileWidth*0.25;
     tower.sell += parseInt(tower.sell*0.2);
+    tower.efficiency += parseInt(tower.efficiency*.45);
     displayHUD();
     console.log("Tower Range Upgraded: "+ tower.range);
     tower.upgrades++ ;
