@@ -10,6 +10,7 @@ var purchasedTower;
 var selectedXIdx;
 var selectedYIdx;
 var audio = new Audio('Shoot.wav');
+var gameInterval;
 
 var projectiles = [];
 
@@ -103,7 +104,7 @@ function start()
 	levelRun();
 	spawnEnemies();
 	levelNum.innerHTML = level;
-	var interval = setInterval(
+	gameInterval = setInterval(
 		function()
 		{
 			if(focused)
@@ -113,7 +114,7 @@ function start()
 			
 			if(roundIsOver)
 			{
-				clearInterval(interval);
+				clearInterval(gameInterval);
 				$("#startBtn").removeClass("disabled");
 				$("#pauseBtn").addClass("disabled");
 				roundIsOver = false;
@@ -158,7 +159,7 @@ function shootVehicle()
 				        	 canvas.renderAll.bind(canvas);
 				        	 setTimeout(function(){canvas.remove(projectiles[0]);projectiles.shift();},towerObjs[i].fireRate*5);
 				        audio.play();
-						// console.log("Vehicle:"+PLAYER.vehicleArray[j].hp+ " Angle shot: "+angleRealDeg);
+						console.log("Vehicle:"+PLAYER.vehicleArray[j].hp+ " Angle shot: "+angleRealDeg);
 						PLAYER.towerArray[i].shoot(PLAYER.vehicleArray[j]);
 						carObjs[j]._element.src = PLAYER.vehicleArray[j].source;
 						break;
@@ -179,6 +180,8 @@ function quitPrompt(confirmQuit)
 	if(quit)
 	{
 		window.cancelRequestAnimFrame(render);
+		clearInterval(gameInterval);
+		roundIsOver = true;
 		PLAYER.vehicleArray.splice(0,PLAYER.vehicleArray.length);
 		carObjs.splice(0,carObjs.length);
 		PLAYER.towerArray.splice(0,PLAYER.towerArray.length);
@@ -195,8 +198,8 @@ function quitPrompt(confirmQuit)
 		upgradeMenu.style.display = "none";
 		mainMenu.style.display = "block";
 		vehicleQueue = null;
-		PLAYER = null;
 		degChange.splice(0,degChange.length);
 		canvas.clear();
+		PLAYER = null;
 	}
 }

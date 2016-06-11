@@ -105,7 +105,8 @@ function updateStatsMenu(tower, upgrade)
         }
         else if(upgrade == "fireRate")
         {
-            $('#rate').html(((15/16)*tower.rate).toFixed(2) + "+" + ((15/16)*Math.ceil(tower.rate*0.10)).toFixed(2));
+            var currFireRate = ((15/16)*tower.rate).toFixed(2);
+            $('#rate').html(currFireRate + "+" + (currFireRate*0.25).toFixed(2));
             $('.offensive').removeClass('disabled');
         }
         else if(upgrade == "range")
@@ -116,7 +117,7 @@ function updateStatsMenu(tower, upgrade)
         else if(upgrade == "production")
         {
             
-            $('#production').html(tower.rate*2 + "+" + tower.rate);
+            $('#production').html(tower.rate*2 + "+" + tower.rate*2.5);
             $('.production').removeClass('disabled');
         }
     }

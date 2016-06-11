@@ -41,7 +41,7 @@ function upgradeFireRate()
     PLAYER.money -= parseInt(tower.cost*0.25);
     tower.cost += parseInt(tower.cost*0.25);
     //maybe increase energy consumption
-    tower.rate++;
+    tower.rate = (tower.rate*1.25);
     towerObjs[index].fireRate=Math.ceil(64/tower.rate);
     towerObjs[index].frameDelay = 0;
     
@@ -97,7 +97,7 @@ function upgradeRange(x, y)
     //maybe increase energy consumption
     tower.range += tileWidth*0.25;
     tower.sell += parseInt(tower.sell*0.2);
-    tower.efficiency += parseInt(tower.efficiency*.45);
+    tower.efficiency += parseInt(tower.efficiency*.25);
     displayHUD();
     console.log("Tower Range Upgraded: "+ tower.range);
     tower.upgrades++ ;
@@ -105,7 +105,7 @@ function upgradeRange(x, y)
   }
   else if(tower.upgrades >= 3)
     alertUser("Maximum Upgrades Reached!")
-    else if(PLAYER.money < parseInt(tower.cost*.25))
+    else if(PLAYER.money < parseInt(tower.cost*.45))
       alertUser("Insufficient Funds!");
       else
         alertUser("Invalid Upgrade!");
@@ -206,7 +206,7 @@ function makeNuclearPower(x, y)
 //DEFENSIVE TOWERS
 function makeSprinklerOne()
 {
-  var sprinkler = new OffensiveTower(200, tileWidth*1.5, 5, 4, 1, selectedXIdx, selectedYIdx, "sprinklerI", "grass");
+  var sprinkler = new OffensiveTower(200, tileWidth*1.5, 5, 1, 1, selectedXIdx, selectedYIdx, "sprinklerI", "grass");
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(sprinkler.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(sprinkler);
@@ -228,7 +228,7 @@ function makeSprinklerOne()
 
 function makeWaterTowerOne()
 {
-  var waterTower = new OffensiveTower(700, tileWidth*1.5, 20, 3, 3, selectedXIdx, selectedYIdx, "waterTowerI", "grass");
+  var waterTower = new OffensiveTower(700, tileWidth*1.5, 20, .80, 3, selectedXIdx, selectedYIdx, "waterTowerI", "grass");
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(waterTower.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(waterTower);
@@ -249,7 +249,7 @@ function makeWaterTowerOne()
 
 function makeFireHydrantOne()
 {
-  var fireHydrant = new OffensiveTower(1400, tileWidth*3.5, 50, 2, 8, selectedXIdx, selectedYIdx, "fireHydrantI", "grass") ;
+  var fireHydrant = new OffensiveTower(1400, tileWidth*3.5, 50, .65, 8, selectedXIdx, selectedYIdx, "fireHydrantI", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(fireHydrant.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(fireHydrant);
@@ -270,7 +270,7 @@ function makeFireHydrantOne()
 
 function makeMechGeyserOne()
 {
-  var geyser = new OffensiveTower(2200, tileWidth*2.5, 100, 1, 15, selectedXIdx, selectedYIdx, "geyserI", "grass") ;
+  var geyser = new OffensiveTower(2200, tileWidth*2.5, 100, .30, 15, selectedXIdx, selectedYIdx, "geyserI", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(geyser.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(geyser);
@@ -291,7 +291,7 @@ function makeMechGeyserOne()
 
 function makeSprinklerTwo()
 {
-  var sprinkler = new OffensiveTower(375, tileWidth*1.5, 10, 4, 2, selectedXIdx, selectedYIdx, "sprinklerII", "grass") ;
+  var sprinkler = new OffensiveTower(375, tileWidth*1.5, 10, 1, 2, selectedXIdx, selectedYIdx, "sprinklerII", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(sprinkler.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(sprinkler);
@@ -312,7 +312,7 @@ function makeSprinklerTwo()
 
 function makeWaterTowerTwo()
 {
-  var waterTower = new OffensiveTower(1350, tileWidth*1.5, 35, 3, 4, selectedXIdx, selectedYIdx, "waterTowerII", "grass") ;
+  var waterTower = new OffensiveTower(1350, tileWidth*1.5, 35, .80, 4, selectedXIdx, selectedYIdx, "waterTowerII", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(waterTower.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(waterTower);
@@ -333,7 +333,7 @@ function makeWaterTowerTwo()
 
 function makeFireHydrantTwo()
 {
-  var fireHydrant = new OffensiveTower(2600, tileWidth*3.5, 90, 2, 17, selectedXIdx, selectedYIdx, "fireHydrantII", "grass") ;
+  var fireHydrant = new OffensiveTower(2600, tileWidth*3.5, 90, .65, 17, selectedXIdx, selectedYIdx, "fireHydrantII", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(fireHydrant.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(fireHydrant);
@@ -354,7 +354,7 @@ function makeFireHydrantTwo()
 
 function makeMechGeyserTwo()
 {
-  var geyser = new OffensiveTower(2400, tileWidth*3.5, 175, 1, 29, selectedXIdx, selectedYIdx, "geyserII", "grass") ;
+  var geyser = new OffensiveTower(2400, tileWidth*3.5, 175, .30, 29, selectedXIdx, selectedYIdx, "geyserII", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(geyser.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(geyser);
@@ -375,7 +375,7 @@ function makeMechGeyserTwo()
 
 function makeSprinklerThree()
 {
-  var sprinkler = new OffensiveTower(700, tileWidth*1.5, 15, 4, 2, selectedXIdx, selectedYIdx, "sprinklerIII", "grass") ;
+  var sprinkler = new OffensiveTower(700, tileWidth*1.5, 15, 1, 2, selectedXIdx, selectedYIdx, "sprinklerIII", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(sprinkler.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(sprinkler);
@@ -396,7 +396,7 @@ function makeSprinklerThree()
 
 function makeWaterTowerThree()
 {
-  var waterTower = new OffensiveTower(2600, tileWidth*1.5, 65, 3, 8, selectedXIdx, selectedYIdx, "waterTowerIII", "grass") ;
+  var waterTower = new OffensiveTower(2600, tileWidth*1.5, 65, .80, 8, selectedXIdx, selectedYIdx, "waterTowerIII", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(waterTower.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(waterTower);
@@ -417,7 +417,7 @@ function makeWaterTowerThree()
 
 function makeFireHydrantThree(x, y)
 {
-  var fireHydrant = new OffensiveTower(4000, tileWidth*3.5, 160, 2, 29, selectedXIdx, selectedYIdx, "fireHydrantIII", "grass") ;
+  var fireHydrant = new OffensiveTower(4000, tileWidth*3.5, 160, .65, 29, selectedXIdx, selectedYIdx, "fireHydrantIII", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(fireHydrant.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(fireHydrant);
@@ -438,7 +438,7 @@ function makeFireHydrantThree(x, y)
 
 function makeMechGeyserThree(x, y)
 {
-  var geyser = new OffensiveTower(5000, tileWidth*2.5, 350, 1, 55, selectedXIdx, selectedYIdx, "geyserIII", "grass") ;
+  var geyser = new OffensiveTower(5000, tileWidth*2.5, 350, .30, 55, selectedXIdx, selectedYIdx, "geyserIII", "grass") ;
   if(mapGrid[selectedXIdx][selectedYIdx].type == "grass" && PLAYER.money >= parseInt(geyser.cost) && !mapGrid[selectedXIdx][selectedYIdx].containsTower)
   {
     spawnTower(geyser);

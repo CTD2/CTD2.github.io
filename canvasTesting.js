@@ -40,7 +40,7 @@ var canvas = new fabric.Canvas('c', {renderOnAddRemove: false}, {stateful: false
 fabric.Group.prototype.hasControls = false;
 canvas.selection = false;
 
-canvas.on('mouse:over', function (e) {
+canvas.observe('mouse:over', function (e) {
     if (fabricPath.indexOf(e.target) > -1) { //if hovering over road obj
         e.target.hoverCursor = 'not-allowed';
     } 
@@ -64,8 +64,8 @@ canvas.on('mouse:over', function (e) {
     }
 });
 
-canvas.on('mouse:out', function (e) {
-    var isRangeObj = /*towerRanges.indexOf(e.target) > -1;*/ e.target.type == "circle";
+canvas.observe('mouse:out', function (e) {
+    var isRangeObj = towerRanges.indexOf(e.target) > -1;
     var isTowerObj = towerObjs.indexOf(e.target) > -1;
     if (!isRangeObj && e.target.filters.length > 0 && fabricPath.indexOf(e.target) < 0) {
         e.target.filters.splice(e.target.filters.indexOf(hoverFilter),1);
@@ -80,12 +80,12 @@ canvas.on('mouse:out', function (e) {
     
 });
 
-// DIFFERENTIATES NODES
+// FOR TESTING PURPOSES --- DIFFERENTIATES NODES
 var filter = new fabric.Image.filters.Tint({
   color: 'rgba(255, 0, 0, 0.5)'
 });
 
-// FILTER FOR GRID HOVERING
+// TEMP FILTER FOR GRID HOVERING
 var hoverFilter = new fabric.Image.filters.Tint({
   color: 'rgba(0, 0, 0, 0.2)'
 });
@@ -294,13 +294,20 @@ function animateCars()
         displayHUD();
     }
     
-    for(var j = 0; j < towerObjs.length; j++) {
-        if(towerObjs[j].frameDelay == towerObjs[j].fireRate) {
-            shootVehicle();
-            towerObjs[j].frameDelay = 0;
+    for(var j = 0; j < towerObjs.length; j++) 
+    {
+        if(PLAYER.towerArray[j] instanceof OffensiveTower)
+        {
+            if(towerObjs[j].frameDelay == towerObjs[j].fireRate) 
+            {
+                towerObjs[j].frameDelay = 0;
+                shootVehicle();
+            }
+            else
+            {
+                towerObjs[j].frameDelay++;
+            }
         }
-        else
-            towerObjs[j].frameDelay++;
     }
     
     render = fabric.util.requestAnimFrame(animateCars, canvas.getElement());
