@@ -181,7 +181,6 @@ function quitPrompt(confirmQuit)
 	{
 		window.cancelRequestAnimFrame(render);
 		clearInterval(gameInterval);
-		roundIsOver = true;
 		PLAYER.vehicleArray.splice(0,PLAYER.vehicleArray.length);
 		carObjs.splice(0,carObjs.length);
 		PLAYER.towerArray.splice(0,PLAYER.towerArray.length);
@@ -200,6 +199,6 @@ function quitPrompt(confirmQuit)
 		vehicleQueue = null;
 		degChange.splice(0,degChange.length);
 		canvas.clear();
-		PLAYER = null;
+		//PLAYER = null;
 	}
 }
